@@ -13,6 +13,9 @@ Branch: rebuild-site
 - Task 7: Simple content template (recovery) — PENDING
 - Task 8: SEO / a11y / sitemap polish — PENDING
 
+## OPEN — needs user confirmation
+- Physician credentials conflict: live wasatchfai.com/staff vs. old homepage mockup differ for Dr. Campbell (live AACFAS vs. homepage FACPM,FASPS) and Dr. Woolley (live FACFAS vs. homepage FAENS,FACFAS). staff.html uses LIVE values. MUST have Josh confirm each doctor's current credentials; then make index.html team cards consistent (Task 8 defaults to live values).
+
 ## Minor findings (for final review)
 - Task 1: ensure every page <head> includes Google Fonts (Fraunces+Inter) link — partials are body-only. (owned by controller, enforced per template)
 - Task 1: partials use root-relative paths; nested pages need ../ adjustment.
