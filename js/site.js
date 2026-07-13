@@ -110,8 +110,38 @@ document.addEventListener('DOMContentLoaded', () => {
         startX = null;
         start();
       }, { passive: true });
+      track.addEventListener('touchcancel', () => {
+        startX = null;
+        start();
+      }, { passive: true });
     }
 
     start();
+  }
+
+  // ============ SERVICES SEARCH FILTER ============
+  if (document.getElementById('serviceSearch')) {
+    const input = document.getElementById('serviceSearch');
+    const cards = Array.from(document.querySelectorAll('#servicesGrid .help-card'));
+    const empty = document.getElementById('servicesEmpty');
+    const status = document.getElementById('servicesStatus');
+    if (input && cards.length) {
+      input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        let visible = 0;
+        cards.forEach(card => {
+          const haystack = (card.dataset.name || '') + ' ' + card.textContent.toLowerCase();
+          const match = q === '' || haystack.toLowerCase().includes(q);
+          card.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+        if (empty) empty.hidden = visible !== 0;
+        if (status) {
+          status.textContent = visible === 0
+            ? 'No services match your search.'
+            : visible + ' service' + (visible === 1 ? '' : 's') + ' found.';
+        }
+      });
+    }
   }
 });
