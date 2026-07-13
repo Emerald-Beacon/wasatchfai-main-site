@@ -21,9 +21,10 @@ Branch: rebuild-site
 - Fixed mislabeled footer 'South Ogden' link -> ogden-utah-foot-doctor.html on all pages (commit 2b77fa5).
 - FIXED REAL BUG: detail-hero background images were 404ing (relative --img resolved against /css/); switched all --img to absolute /images/ on 3 pages + condition/staff/location templates; verified in Chrome photo renders (commit 9cbc636).
 
-## OPEN — needs user decision (2)
-1. Physician credentials: staff.html + index.html now both use LIVE wasatchfai.com values (Campbell DPM,MHA,AACFAS; Woolley DPM,FACFAS). CONFIRM these are each doctor's current correct credentials.
-2. Slug 'ankle-franctures' (misspelled) is kept because it's the LIVE site's real URL (preserves SEO/inbound links). Decide: keep as-is, or rename to 'ankle-fractures' + add a redirect.
+## RESOLVED — user decisions
+1. Physician credentials: CONFIRMED live values are correct (Campbell DPM,MHA,AACFAS; Frost DPM,MHA,FACFAS; Woolley DPM,FACFAS; Murrah DPM,MHA,MPH,MBA,PhD). No change needed.
+2. Ankle slug: RENAMED ankle-franctures -> ankle-fractures across all nav/cards/templates; added 301 redirect /ankle-franctures -> /ankle-fractures.html in netlify.toml. Phase 2 builds ankle-fractures.html.
+3. Branch: KEEP rebuild-site; continue to Phase 2 (build remaining ~45 pages from templates).
 
 ## Minor findings (for final review)
 - Task 1: ensure every page <head> includes Google Fonts (Fraunces+Inter) link — partials are body-only. (owned by controller, enforced per template)

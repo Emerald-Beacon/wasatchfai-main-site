@@ -4,7 +4,13 @@
 [build]
   publish = "."
 
-# Redirect rules (if needed in the future)
+# Preserve the old (misspelled) live-site URL for inbound links & SEO.
+[[redirects]]
+  from = "/ankle-franctures"
+  to = "/ankle-fractures.html"
+  status = 301
+
+# Redirect rules (add more as needed in the future)
 # [[redirects]]
 #   from = "/*"
 #   to = "/index.html"
