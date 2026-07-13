@@ -13,7 +13,7 @@
   {{CONDITION_NAME}}  - The condition/service display name, e.g. "Heel Pain" (used in breadcrumb, hero H1, nav highlighting).
   {{BREADCRUMB_NAME}} - Usually same as {{CONDITION_NAME}}; separate placeholder in case breadcrumb needs a shorter label.
   {{SUMMARY}}         - One-line hero summary/subhead beneath the H1 (1 warm, plain-language sentence).
-  {{HERO_IMG}}        - Path to the hero background image, e.g. "images/heel-pain.jpg".
+  {{HERO_IMG}}        - Relative path to hero image, e.g. "images/heel-pain.jpg". Used as-is for og:image; the CSS background prefixes a leading slash (/images/...) so it resolves against the site root, not the stylesheet dir.
   {{HERO_ALT}}        - A visually-hidden text description of the hero background image, rendered as a
                          <span class="visually-hidden"> inside the hero (do not put role="img"/aria-label on the
                          hero content wrapper — it would hide the H1/lede/CTA from screen readers).
@@ -142,7 +142,7 @@
 </nav>
 
 <!-- DETAIL HERO -->
-<section class="detail-hero" style="--img:url('{{HERO_IMG}}')">
+<section class="detail-hero" style="--img:url('/{{HERO_IMG}}')">
   <div class="container detail-hero-inner">
     <span class="visually-hidden">{{HERO_ALT}}</span>
     <span class="eyebrow">Foot &amp; Ankle Conditions</span>
