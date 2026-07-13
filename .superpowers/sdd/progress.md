@@ -16,6 +16,15 @@ Branch: rebuild-site
 ## OPEN — needs user confirmation
 - Physician credentials conflict: live wasatchfai.com/staff vs. old homepage mockup differ for Dr. Campbell (live AACFAS vs. homepage FACPM,FASPS) and Dr. Woolley (live FACFAS vs. homepage FAENS,FACFAS). staff.html uses LIVE values. MUST have Josh confirm each doctor's current credentials; then make index.html team cards consistent (Task 8 defaults to live values).
 
+## Final whole-branch review — applied fixes
+- Removed role="img" anti-pattern from hero content wrappers; added .visually-hidden descriptions (commit 294197a).
+- Fixed mislabeled footer 'South Ogden' link -> ogden-utah-foot-doctor.html on all pages (commit 2b77fa5).
+- FIXED REAL BUG: detail-hero background images were 404ing (relative --img resolved against /css/); switched all --img to absolute /images/ on 3 pages + condition/staff/location templates; verified in Chrome photo renders (commit 9cbc636).
+
+## OPEN — needs user decision (2)
+1. Physician credentials: staff.html + index.html now both use LIVE wasatchfai.com values (Campbell DPM,MHA,AACFAS; Woolley DPM,FACFAS). CONFIRM these are each doctor's current correct credentials.
+2. Slug 'ankle-franctures' (misspelled) is kept because it's the LIVE site's real URL (preserves SEO/inbound links). Decide: keep as-is, or rename to 'ankle-fractures' + add a redirect.
+
 ## Minor findings (for final review)
 - Task 1: ensure every page <head> includes Google Fonts (Fraunces+Inter) link — partials are body-only. (owned by controller, enforced per template)
 - Task 1: partials use root-relative paths; nested pages need ../ adjustment.
