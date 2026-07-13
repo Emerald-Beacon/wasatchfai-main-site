@@ -453,6 +453,33 @@ footer ul a:hover{color:#ffd6a8}
 .related-card p{font-size:.9rem;margin-bottom:14px}
 .related-card span{color:var(--blue);font-weight:600;font-size:.88rem}
 
+/* ============ LOCATION PAGE (details + map) ============ */
+.loc-section{background:var(--white)}
+.loc-layout{
+  display:grid;grid-template-columns:380px minmax(0,1fr);gap:40px;align-items:stretch;
+}
+.loc-card{
+  background:var(--cream);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:32px;box-shadow:var(--shadow-sm);
+}
+.loc-card h2{font-size:1.4rem;margin-bottom:20px}
+.loc-card-row{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.loc-card-row svg{color:var(--blue);flex-shrink:0;margin-top:2px}
+.loc-card-row strong{display:block;font-size:.82rem;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;margin-bottom:2px}
+.loc-card-row span{font-size:.98rem;color:var(--ink)}
+.loc-card-row a{color:var(--ink);border-bottom:1px solid var(--line)}
+.loc-card-row a:hover{color:var(--blue);border-color:var(--blue)}
+.loc-hours{background:var(--white);border-radius:var(--r);padding:14px 16px;margin:8px 0 20px;color:var(--ink-soft);font-size:.92rem}
+.loc-hours strong{color:var(--ink)}
+.loc-card-btn{width:100%;justify-content:center}
+.loc-map-wrap{
+  position:relative;width:100%;min-height:340px;border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);
+}
+.loc-map-wrap iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;
+}
+
 /* ============ PHYSICIAN ROWS (staff page) ============ */
 .physician-row{
   display:grid;grid-template-columns:320px minmax(0,1fr);gap:56px;align-items:start;
@@ -504,6 +531,8 @@ footer ul a:hover{color:#ffd6a8}
   .detail-layout{grid-template-columns:1fr;gap:40px}
   .detail-aside{position:static;max-width:480px}
   .detail-hero{padding:70px 0}
+  .loc-layout{grid-template-columns:1fr;gap:28px}
+  .loc-map-wrap{min-height:280px}
   .physician-row,.physician-row.is-reverse{grid-template-columns:1fr;gap:24px}
   .physician-row .physician-photo,.physician-row.is-reverse .physician-photo{order:1;max-width:320px;margin:0 auto}
   .physician-row .physician-body,.physician-row.is-reverse .physician-body{order:2}

@@ -1,0 +1,219 @@
+<!--
+  LOCATION PAGE TEMPLATE
+  =======================
+  Reference only — NOT a served page. Copy this file to `<slug>.html` at the
+  repo root and fill in every placeholder below. Do not leave any
+  {{PLACEHOLDER}} in a shipped page. Exemplar: farmington-utah.html.
+
+  Placeholders:
+  {{CITY}}            - Location display name, e.g. "South Ogden" (hero H1, breadcrumb, headings).
+  {{TITLE}}           - <title> tag text. Pattern: "{{CITY}}, UT Foot & Ankle Clinic | Wasatch Foot & Ankle Institute"
+  {{META_DESC}}       - <meta name="description"> content, ~150-160 chars: city + address + CTA hint.
+  {{OG_DESC}}         - Open Graph / Twitter description, can match {{META_DESC}} or be a shorter variant.
+  {{SLUG}}            - URL filename without extension, e.g. "ogden-utah-foot-doctor" (canonical/OG URL, hidden form-name suffix).
+  {{HERO_TAGLINE}}    - One warm, plain-language sentence under the hero H1 introducing this clinic.
+  {{ADDRESS}}         - Full street address, two lines: street/suite, then "City, UT ZIP". Must be verbatim/verified — never invented.
+  {{PHONE}}           - Local clinic phone, digits-only for tel: links plus display format, e.g. "801-627-2122" / "8016272122".
+  {{FAX}}             - Local clinic fax number, display format.
+  {{HOURS}}           - Hours block HTML, e.g. "Mon–Thu: 8:00a – 5:00p<br>Fri: 8:00a – 12:00p<br>Sat–Sun: Closed".
+  {{MAP_EMBED}}       - Full Google Maps embed src URL for this address, e.g.
+                        "https://www.google.com/maps?q=<url-encoded address>&output=embed". Iframe must keep
+                        loading="lazy" and a descriptive title attribute naming the clinic + address.
+  {{BODY}}            - Verbatim-polished per-location content: intro, what to expect, directions/neighborhood notes
+                        if available. Marked up with <h2>/<p> inside .detail-body. Do NOT invent facts (landmarks,
+                        neighborhood claims, etc.) that aren't confirmed from the source content.
+  {{OTHER_CLINIC}}    - Name + address + phone + link (slug) for the sibling clinic location, used in the
+                        cross-link aside card. E.g. Farmington page cross-links South Ogden and vice versa.
+  {{FORM_NAME}}       - Unique Netlify form name for this location's mini appointment form, e.g. "appointment-southogden".
+                        Must match both the <form name="..."> and the hidden form-name input value.
+
+  Contact facts (address/phone/fax/hours) must be reproduced verbatim from the verified source — never invented
+  or approximated. "Pay a Bill" always links to https://pay.InstaMed.com/WASATCHFOOT.
+
+  Do not modify netlify.toml or the shared header/footer markup structure when cloning this file.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{META_DESC}}">
+<link rel="canonical" href="https://www.wasatchfai.com/{{SLUG}}.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wasatch Foot &amp; Ankle Institute">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{OG_DESC}}">
+<meta property="og:url" content="https://www.wasatchfai.com/{{SLUG}}.html">
+<meta property="og:image" content="https://www.wasatchfai.com/images/hero-mountain-biking.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{TITLE}}">
+<meta name="twitter:description" content="{{OG_DESC}}">
+<meta name="twitter:image" content="https://www.wasatchfai.com/images/hero-mountain-biking.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<!-- TOP BAR (copy verbatim from partials/header.html) -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:8014517500">Farmington 801-451-7500</a>
+      <a href="tel:8016272122">South Ogden 801-627-2122</a>
+    </div>
+    <div class="topbar-right">
+      <span>Mon–Thu 8a–5p · Fri 8a–12p</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER (copy verbatim from partials/header.html) -->
+<header class="header">
+  <!-- ... full header markup, unmodified ... -->
+</header>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="container">
+    <ol>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="farmington-utah.html">Locations</a></li>
+      <li aria-current="page">{{CITY}}</li>
+    </ol>
+  </div>
+</nav>
+
+<!-- LOCATION HERO -->
+<section class="detail-hero" style="--img:url('images/hero-mountain-biking.jpg')">
+  <div class="container detail-hero-inner">
+    <span class="eyebrow">Northern Utah</span>
+    <h1>{{CITY}}</h1>
+    <p class="detail-hero-lede">{{HERO_TAGLINE}}</p>
+  </div>
+</section>
+
+<!-- LOCATION DETAILS + MAP -->
+<section class="loc-section">
+  <div class="container loc-layout">
+    <div class="loc-card reveal">
+      <h2>Visit our {{CITY}} clinic</h2>
+      <div class="loc-card-row">
+        <div><strong>Address</strong><span>{{ADDRESS}}</span></div>
+      </div>
+      <div class="loc-card-row">
+        <div><strong>Phone</strong><span><a href="tel:{{PHONE}}">{{PHONE}}</a></span></div>
+      </div>
+      <div class="loc-card-row">
+        <div><strong>Fax</strong><span>{{FAX}}</span></div>
+      </div>
+      <div class="loc-card-row">
+        <div><strong>Email</strong><span><a href="mailto:contactus@wasatchfai.com">contactus@wasatchfai.com</a></span></div>
+      </div>
+      <div class="hours loc-hours">
+        <strong>Hours</strong>
+        {{HOURS}}
+      </div>
+      <a href="book-appointment.html" class="btn btn-primary btn-arrow loc-card-btn">Request Appointment</a>
+    </div>
+
+    <div class="loc-map-wrap reveal">
+      <iframe
+        src="{{MAP_EMBED}}"
+        title="Map showing Wasatch Foot & Ankle Institute, {{ADDRESS}}"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT THIS LOCATION -->
+<section class="detail-section">
+  <div class="container detail-layout">
+    <article class="detail-body">
+      {{BODY}}
+    </article>
+
+    <aside class="detail-aside">
+      <div class="aside-card">
+        <h3>Prefer our other clinic?</h3>
+        <p>{{OTHER_CLINIC}}</p>
+        <a href="book-appointment.html" class="btn btn-secondary btn-arrow aside-btn">View Other Location</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- APPOINTMENT FORM -->
+<section class="contact" id="appointment">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" style="color:#ffd6a8">Request an Appointment</span>
+      <h2>Let's get your {{CITY}} visit on the books.</h2>
+      <p>Tell us a bit about you and we'll be in touch within one business day.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="locations reveal">
+        <div class="location">
+          <h3>{{CITY}}</h3>
+          <div class="location-row"><div>{{ADDRESS}}</div></div>
+          <div class="location-row"><a href="tel:{{PHONE}}">{{PHONE}}</a></div>
+          <div class="hours">
+            <strong>Hours</strong>
+            {{HOURS}}
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" name="{{FORM_NAME}}" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="{{FORM_NAME}}">
+        <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <h3>Request an appointment</h3>
+        <div class="form-row">
+          <div class="form-group"><label>First name</label><input type="text" name="first-name" required></div>
+          <div class="form-group"><label>Last name</label><input type="text" name="last-name" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Phone</label><input type="tel" name="phone" required></div>
+          <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+        </div>
+        <div class="form-group">
+          <label>What's going on with your feet?</label>
+          <textarea name="message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-arrow">Send Request</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="container cta-band-inner reveal">
+    <div>
+      <span class="eyebrow" style="color:#ffe5cc">Ready When You Are</span>
+      <h2>Let's get you back on your feet — pain-free.</h2>
+      <p>Same-day appointments are available for emergencies. Reach out to our {{CITY}} team today.</p>
+    </div>
+    <div class="cta-band-actions">
+      <a href="book-appointment.html" class="btn btn-light btn-arrow">Request Appointment</a>
+      <a href="tel:{{PHONE}}" class="btn btn-ghost cta-ghost">Call {{CITY}}</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (copy verbatim from partials/footer.html) -->
+<footer>
+  <!-- ... full footer markup, unmodified ... -->
+</footer>
+
+<script src="js/site.js" defer></script>
+</body>
+</html>
