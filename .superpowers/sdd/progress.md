@@ -8,7 +8,7 @@ Branch: rebuild-site
 - Task 2: Homepage with carousel hero — complete (c99ac6d..f562279, review clean; minors deferred to Task 8)
 - Task 3: Condition detail template (plantar fasciitis) — complete (0da7762..a07afcc, review clean; minors deferred to Task 8)
 - Task 4: Services index — complete (29ba500..9bb13cd, review clean; minors deferred to Task 8)
-- Task 5: Staff template — PENDING
+- Task 5: Staff template — complete (76e0feb..625da18, review clean; credential conflict logged as OPEN)
 - Task 6: Location template (Farmington) — PENDING
 - Task 7: Simple content template (recovery) — PENDING
 - Task 8: SEO / a11y / sitemap polish — PENDING
