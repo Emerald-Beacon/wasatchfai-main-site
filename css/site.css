@@ -84,7 +84,7 @@ p{color:var(--ink-soft)}
 }
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:30px}
 .logo{display:flex;align-items:center;gap:12px}
-.logo img{height:54px;width:auto}
+.logo img{height:58px;width:auto}
 .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;line-height:1.1;color:var(--blue-dark)}
 .logo-text span{display:block;font-size:.7rem;color:var(--sage-dark);letter-spacing:.15em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;margin-top:3px}
 nav.main-nav ul{display:flex;list-style:none;gap:30px;align-items:center}
@@ -352,7 +352,7 @@ footer ul a:hover{color:#ffd6a8}
   position:absolute;inset:0;display:flex;align-items:center;
   opacity:0;visibility:hidden;
   transition:opacity 1s ease, visibility 0s linear 1s;
-  background-image:var(--img);
+  background-color:var(--blue-dark);
   background-size:cover;background-position:center;
 }
 /* dark overlay kept on its own layer so the (large) image always composites */
@@ -405,7 +405,7 @@ footer ul a:hover{color:#ffd6a8}
 /* ============ DETAIL HERO (condition/service pages) ============ */
 .detail-hero{
   position:relative;overflow:hidden;background:var(--blue-dark);
-  background-image:var(--img);background-size:cover;background-position:center;
+  background-size:cover;background-position:center;
   padding:100px 0;
 }
 .detail-hero::before{
