@@ -154,14 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const STEP = 52;   // px of cursor travel between prints
     const PERP = 8;    // px each foot sits off the path centre line
     const LIFE = 1500; // ms a print lives (fades over ~2-3 following steps)
-    const foot = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
-      + '<ellipse cx="12" cy="9" rx="6.2" ry="5.4"/>'
-      + '<ellipse cx="12.4" cy="18" rx="4.3" ry="3.7"/>'
-      + '<circle cx="6.6" cy="4.3" r="1.5"/>'
-      + '<circle cx="10" cy="2.7" r="1.7"/>'
-      + '<circle cx="13.6" cy="2.5" r="1.7"/>'
-      + '<circle cx="16.9" cy="3.5" r="1.5"/>'
-      + '<circle cx="19" cy="5.6" r="1.3"/>'
+    const foot = '<svg viewBox="0 0 64 96" fill="currentColor" aria-hidden="true">'
+      + '<ellipse cx="18" cy="15" rx="7.5" ry="9.5"/>'
+      + '<ellipse cx="32" cy="9" rx="6" ry="7.5"/>'
+      + '<ellipse cx="42" cy="10" rx="5.2" ry="6.5"/>'
+      + '<ellipse cx="50" cy="14" rx="4.3" ry="5.3"/>'
+      + '<ellipse cx="56" cy="20" rx="3.5" ry="4.3"/>'
+      + '<path d="M16 42 C13 30 23 25 33 25 C45 25 53 31 52 45 C51 57 47 64 46 72 C45 83 39 91 32 91 C25 91 19 84 21 74 C27 62 27 50 16 42 Z"/>'
       + '</svg>';
 
     let lastX = null, lastY = null, travel = 0, side = 1;
