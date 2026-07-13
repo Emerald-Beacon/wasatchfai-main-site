@@ -315,12 +315,68 @@ footer ul a:hover{color:#ffd6a8}
 }
 .footer-social a:hover{background:var(--orange);color:#fff}
 
+/* ============ HERO CAROUSEL ============ */
+.hero-carousel{position:relative;overflow:hidden;background:var(--blue-dark)}
+.hero-carousel::after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:64px;z-index:2;
+  background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none;
+}
+.hero-track{position:relative;height:clamp(560px,80vh,760px)}
+.hero-slide{
+  position:absolute;inset:0;display:flex;align-items:center;
+  opacity:0;visibility:hidden;
+  transition:opacity 1s ease, visibility 0s linear 1s;
+  background-image:var(--img);
+  background-size:cover;background-position:center;
+}
+/* dark overlay kept on its own layer so the (large) image always composites */
+.hero-slide::before{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(100deg,rgba(13,35,54,.85) 0%,rgba(13,35,54,.6) 42%,rgba(13,35,54,.28) 100%);
+}
+.hero-slide.is-active{opacity:1;visibility:visible;z-index:1;transition:opacity 1s ease, visibility 0s}
+.hero-slide-inner{position:relative;z-index:2;max-width:660px;padding:40px 0}
+.hero-slide .eyebrow{color:#ffd6a8}
+.hero-slide h1{color:#fff;margin-bottom:22px}
+.hero-slide h1 em{font-style:italic;color:#ffd6a8;font-weight:500}
+.hero-lede{font-size:1.2rem;color:rgba(255,255,255,.92);margin-bottom:32px;max-width:560px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-ghost{color:#fff;border-color:rgba(255,255,255,.4)}
+.hero-ghost:hover{border-color:#fff;background:rgba(255,255,255,.14);color:#fff}
+.hero-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  color:#fff;font-size:1.9rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s, transform .2s;
+}
+.hero-arrow:hover{background:rgba(255,255,255,.32)}
+.hero-arrow:focus-visible{outline:3px solid #ffd6a8;outline-offset:3px}
+.hero-arrow.prev{left:24px}
+.hero-arrow.next{right:24px}
+.hero-dots{
+  position:absolute;bottom:28px;left:0;right:0;z-index:3;
+  display:flex;justify-content:center;gap:12px;
+}
+.hero-dots button{
+  width:12px;height:12px;border-radius:999px;border:none;cursor:pointer;padding:0;
+  background:rgba(255,255,255,.45);transition:background .25s, width .25s;
+}
+.hero-dots button:hover{background:rgba(255,255,255,.75)}
+.hero-dots button[aria-selected="true"]{background:#fff;width:34px}
+.hero-dots button:focus-visible{outline:2px solid #ffd6a8;outline-offset:3px}
+
 /* ============ ANIMATIONS ============ */
 .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 
 /* ============ RESPONSIVE ============ */
 @media (max-width:980px){
+  .hero-track{height:clamp(520px,86vh,660px)}
+  .hero-arrow{width:44px;height:44px;font-size:1.5rem}
+  .hero-arrow.prev{left:12px}
+  .hero-arrow.next{right:12px}
   .about-grid,.promo-grid,.contact-grid{grid-template-columns:1fr;gap:50px}
   .about-imagery{max-width:480px;margin:0 auto}
   .footer-grid{grid-template-columns:1fr 1fr;gap:30px}
@@ -345,9 +401,18 @@ footer ul a:hover{color:#ffd6a8}
   nav.main-nav li.has-dropdown > a::before{float:right;margin-top:8px}
 }
 @media (max-width:600px){
+  .hero-slide::before{
+    background:linear-gradient(175deg,rgba(13,35,54,.78) 0%,rgba(13,35,54,.62) 55%,rgba(13,35,54,.5) 100%);
+  }
+  .hero-arrow{display:none}
+  .hero-lede{font-size:1.05rem}
+  .hero-cta .btn{width:100%;justify-content:center}
   .form-row{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
   .topbar{font-size:.78rem}
   .topbar .container{justify-content:center;text-align:center}
   .insurance-row{gap:24px;font-size:1rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-slide{transition:opacity .01s, visibility 0s}
 }
