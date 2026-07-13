@@ -7,7 +7,7 @@ Branch: rebuild-site
 - Task 1: Scaffolding & shared assets — complete (570639f..038f494, review clean; dropdown CSS/JS adjudicated in-scope)
 - Task 2: Homepage with carousel hero — complete (c99ac6d..f562279, review clean; minors deferred to Task 8)
 - Task 3: Condition detail template (plantar fasciitis) — complete (0da7762..a07afcc, review clean; minors deferred to Task 8)
-- Task 4: Services index — PENDING
+- Task 4: Services index — complete (29ba500..9bb13cd, review clean; minors deferred to Task 8)
 - Task 5: Staff template — PENDING
 - Task 6: Location template (Farmington) — PENDING
 - Task 7: Simple content template (recovery) — PENDING
@@ -18,4 +18,5 @@ Branch: rebuild-site
 - Task 1: partials use root-relative paths; nested pages need ../ adjustment.
 - Task 3 (Minor, do in Task 8): hero uses CSS background-image with no alt/aria-label (affects .hero-slide sitewide + .detail-hero) — add aria-label or visually-hidden text; wire {{HERO_ALT}} in docs/templates/condition.html into that aria-label.
 - Task 3 (verify in final review): spot-check plantar-fasciitis.html medical copy fidelity vs live wasatchfai.com/plantar-fasciitis.
+- Task 4 (Minor, do in Task 8): move services live-search filter from inline <script> into js/site.js (guard by element id); add aria-hidden="true" to decorative SVG icons sitewide (search icon, topbar phone/social icons); wrap services filter empty-state in aria-live; revisit posterior-tibial-tendon card image reuse in Phase 2.
 - Task 2 (Minor, do in Task 8): add touchcancel->start() on carousel track; tokenize hero overlay color (rgba 21,66,106) or add --overlay; optionally complete ARIA tab/tabpanel wiring (aria-controls/id).
