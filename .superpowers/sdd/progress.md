@@ -10,7 +10,7 @@ Branch: rebuild-site
 - Task 4: Services index — complete (29ba500..9bb13cd, review clean; minors deferred to Task 8)
 - Task 5: Staff template — complete (76e0feb..625da18, review clean; credential conflict logged as OPEN)
 - Task 6: Location template (Farmington) — complete (88b2d60..82bba41, review Needs-fixes->fixed 82bba41: template cross-link now uses OTHER_CLINIC_SLUG; verified)
-- Task 7: Simple content template (recovery) — PENDING
+- Task 7: Simple content template (recovery) — complete (5aeeeee..87cae19, review clean)
 - Task 8: SEO / a11y / sitemap polish — PENDING
 
 ## OPEN — needs user confirmation
