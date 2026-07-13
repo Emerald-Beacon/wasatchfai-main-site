@@ -117,6 +117,11 @@ nav.main-nav li.has-dropdown > a::before{
   transition:opacity .2s ease,transform .2s ease,visibility .2s;
   z-index:120;
 }
+/* invisible bridge across the gap so the menu stays open while the cursor
+   travels from the "Services" link down into the dropdown */
+.dropdown-menu::before{
+  content:"";position:absolute;left:0;right:0;top:-16px;height:16px;
+}
 nav.main-nav li.has-dropdown:hover .dropdown-menu,
 nav.main-nav li.has-dropdown:focus-within .dropdown-menu{
   opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0);
