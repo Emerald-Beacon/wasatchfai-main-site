@@ -603,3 +603,23 @@ footer ul a:hover{color:#ffd6a8}
 @media (prefers-reduced-motion:reduce){
   .hero-slide{transition:opacity .01s, visibility 0s}
 }
+
+/* ============ CURSOR FOOTPRINTS ============ */
+.footprint{
+  position:fixed;top:0;left:0;width:30px;height:30px;
+  margin:0;pointer-events:none;z-index:9998;
+  color:var(--orange);opacity:0;
+  filter:drop-shadow(0 1px 1px rgba(29,39,51,.18));
+  animation:footprint-fade 1.5s ease-out forwards;
+  will-change:opacity;
+}
+.footprint svg{display:block;width:100%;height:100%}
+@keyframes footprint-fade{
+  0%{opacity:0}
+  10%{opacity:.5}
+  50%{opacity:.5}
+  100%{opacity:0}
+}
+@media (prefers-reduced-motion: reduce){
+  .footprint{display:none}
+}

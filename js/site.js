@@ -144,4 +144,50 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+
+  // ============ CURSOR FOOTPRINTS (desktop mouse only) ============
+  (function initFootprints() {
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!finePointer || reduce) return; // skip on touch devices & reduced-motion
+
+    const STEP = 52;   // px of cursor travel between prints
+    const PERP = 8;    // px each foot sits off the path centre line
+    const LIFE = 1500; // ms a print lives (fades over ~2-3 following steps)
+    const foot = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
+      + '<ellipse cx="12" cy="9" rx="6.2" ry="5.4"/>'
+      + '<ellipse cx="12.4" cy="18" rx="4.3" ry="3.7"/>'
+      + '<circle cx="6.6" cy="4.3" r="1.5"/>'
+      + '<circle cx="10" cy="2.7" r="1.7"/>'
+      + '<circle cx="13.6" cy="2.5" r="1.7"/>'
+      + '<circle cx="16.9" cy="3.5" r="1.5"/>'
+      + '<circle cx="19" cy="5.6" r="1.3"/>'
+      + '</svg>';
+
+    let lastX = null, lastY = null, travel = 0, side = 1;
+
+    window.addEventListener('mousemove', (e) => {
+      if (lastX === null) { lastX = e.clientX; lastY = e.clientY; return; }
+      const dx = e.clientX - lastX, dy = e.clientY - lastY;
+      const d = Math.hypot(dx, dy);
+      lastX = e.clientX; lastY = e.clientY;
+      if (d === 0) return;
+      travel += d;
+      if (travel < STEP) return;
+      travel = 0;
+      const deg = Math.atan2(dy, dx) * 180 / Math.PI; // 0deg = moving right
+      const perpX = -dy / d, perpY = dx / d;           // unit vector perpendicular to travel
+      const ox = perpX * PERP * side, oy = perpY * PERP * side;
+      const print = document.createElement('div');
+      print.className = 'footprint';
+      print.innerHTML = foot;
+      print.style.left = (e.clientX + ox) + 'px';
+      print.style.top = (e.clientY + oy) + 'px';
+      // art points "up" by default: +90deg faces travel direction; scaleX mirrors L/R feet
+      print.style.transform = 'translate(-50%,-50%) rotate(' + (deg + 90) + 'deg) scaleX(' + side + ')';
+      document.body.appendChild(print);
+      setTimeout(() => print.remove(), LIFE);
+      side *= -1; // alternate left / right foot
+    }, { passive: true });
+  })();
 });
