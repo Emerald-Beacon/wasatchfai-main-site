@@ -342,7 +342,7 @@ footer ul a:hover{color:#ffd6a8}
 .footer-social a:hover{background:var(--orange);color:#fff}
 
 /* ============ HERO CAROUSEL ============ */
-.hero-carousel{position:relative;overflow:hidden;background:var(--blue-dark)}
+.hero-carousel{position:relative;overflow:hidden;background:var(--blue-dark);padding:0}
 .hero-carousel::after{
   content:"";position:absolute;left:0;right:0;bottom:-1px;height:64px;z-index:2;
   background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none;
