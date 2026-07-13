@@ -11,7 +11,7 @@ Branch: rebuild-site
 - Task 5: Staff template — complete (76e0feb..625da18, review clean; credential conflict logged as OPEN)
 - Task 6: Location template (Farmington) — complete (88b2d60..82bba41, review Needs-fixes->fixed 82bba41: template cross-link now uses OTHER_CLINIC_SLUG; verified)
 - Task 7: Simple content template (recovery) — complete (5aeeeee..87cae19, review clean)
-- Task 8: SEO / a11y / sitemap polish — PENDING
+- Task 8: SEO / a11y / sitemap polish — complete (3a86a21..ab67a56, review clean; a11y sweep + credential reconciliation done)
 
 ## OPEN — needs user confirmation
 - Physician credentials conflict: live wasatchfai.com/staff vs. old homepage mockup differ for Dr. Campbell (live AACFAS vs. homepage FACPM,FASPS) and Dr. Woolley (live FACFAS vs. homepage FAENS,FACFAS). staff.html uses LIVE values. MUST have Josh confirm each doctor's current credentials; then make index.html team cards consistent (Task 8 defaults to live values).
