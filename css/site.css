@@ -441,6 +441,29 @@ footer ul a:hover{color:#ffd6a8}
 .aside-phone span{display:block;font-size:.95rem;font-weight:600}
 .aside-btn{width:100%;justify-content:center}
 
+/* ============ PROSE (simple content pages: recovery, forms, pricing, feedback, etc.) ============ */
+.prose{max-width:68ch;margin:0 auto;font-size:1.05rem}
+.prose h2{font-size:1.7rem;margin:48px 0 18px}
+.prose h2:first-child{margin-top:0}
+.prose h3{font-size:1.25rem;margin:30px 0 12px}
+.prose p{margin-bottom:18px;font-size:1.02rem;line-height:1.75}
+.prose ul,.prose ol{margin:0 0 22px;padding-left:24px;color:var(--ink-soft)}
+.prose ul{list-style:disc}
+.prose ol{list-style:decimal}
+.prose li{margin-bottom:10px;line-height:1.65}
+.prose li::marker{color:var(--sage-dark)}
+.prose a{color:var(--blue);text-decoration:underline;text-decoration-color:rgba(31,92,140,.35);text-underline-offset:3px}
+.prose a:hover{color:var(--blue-dark);text-decoration-color:var(--blue-dark)}
+.prose strong{color:var(--ink);font-weight:600}
+.prose blockquote{
+  margin:28px 0;padding:18px 24px;border-left:3px solid var(--sage);
+  background:var(--sand);border-radius:0 var(--r) var(--r) 0;
+  color:var(--ink-soft);font-style:italic;
+}
+.prose blockquote p{margin-bottom:0}
+.prose hr{border:none;border-top:1px solid var(--line);margin:40px 0}
+.prose img{border-radius:var(--r-lg);margin:24px 0;box-shadow:var(--shadow-sm)}
+
 /* ============ RELATED CONDITIONS ============ */
 .related{background:var(--white)}
 .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
