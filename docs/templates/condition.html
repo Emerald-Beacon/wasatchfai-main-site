@@ -14,8 +14,9 @@
   {{BREADCRUMB_NAME}} - Usually same as {{CONDITION_NAME}}; separate placeholder in case breadcrumb needs a shorter label.
   {{SUMMARY}}         - One-line hero summary/subhead beneath the H1 (1 warm, plain-language sentence).
   {{HERO_IMG}}        - Path to the hero background image, e.g. "images/heel-pain.jpg".
-  {{HERO_ALT}}        - Descriptive alt text for the hero image concept (hero uses a CSS background-image, but keep this
-                         value handy for any <img> fallback or for documenting the image choice).
+  {{HERO_ALT}}        - A visually-hidden text description of the hero background image, rendered as a
+                         <span class="visually-hidden"> inside the hero (do not put role="img"/aria-label on the
+                         hero content wrapper — it would hide the H1/lede/CTA from screen readers).
   {{BODY_HTML}}       - The full verbatim-polished condition content: overview, symptoms, causes, diagnosis, and
                          treatment sections, marked up with <h2>/<h3>/<p>/<ul><li> inside .detail-body. Do NOT alter
                          any medical claims, statistics, or clinical instructions when filling this in.
@@ -141,8 +142,9 @@
 </nav>
 
 <!-- DETAIL HERO -->
-<section class="detail-hero" style="--img:url('{{HERO_IMG}}')" role="img" aria-label="{{HERO_ALT}}">
+<section class="detail-hero" style="--img:url('{{HERO_IMG}}')">
   <div class="container detail-hero-inner">
+    <span class="visually-hidden">{{HERO_ALT}}</span>
     <span class="eyebrow">Foot &amp; Ankle Conditions</span>
     <h1>{{CONDITION_NAME}}</h1>
     <p class="detail-hero-lede">{{SUMMARY}}</p>
