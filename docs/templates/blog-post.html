@@ -1,0 +1,377 @@
+<!--
+  BLOG POST TEMPLATE  (post/<SLUG>.html)
+  ======================================
+  Reference only — NOT a served page. Clone this to `post/<SLUG>.html` and fill
+  every {{PLACEHOLDER}}. Do not leave any {{...}} in a shipped page.
+
+  ⚠️ CRITICAL — THE ../ PATH RULE (this is why this template exists):
+  Blog posts live in the /post/ SUBDIRECTORY, so EVERY shared-asset and internal
+  link MUST be prefixed with ../ so it resolves from /post/ up to the site root:
+    • Stylesheet:  href="../css/site.css"      Script: src="../js/site.js"
+    • Logo/images: src="../images/..."   Hero bg: url('../images/...')  (inline, relative)
+    • Nav/footer/breadcrumb/related/CTA internal links: ../index.html, ../blog.html,
+      ../plantar-fasciitis.html, ../book-appointment.html, ../services.html, etc.
+    • Google Fonts links stay ABSOLUTE (https://fonts.googleapis.com...).
+    • Canonical, OG:url, twitter, and ALL JSON-LD urls stay ABSOLUTE
+      (https://www.wasatchfai.com/post/<SLUG>.html and .../images/... , .../logo-full.png).
+  There must be NO href="css/ / src="images/ (missing ../) and NO leading-slash
+  /css/ /images/. Verify before shipping.
+
+  Placeholders:
+  {{TITLE}}       - <title> + og/twitter title. Pattern: "<Post Title> | Wasatch Foot & Ankle"
+  {{META_DESC}}    - <meta name="description">, ~150-160 chars, benefit + who/where.
+  {{OG_DESC}}      - Open Graph / Twitter description (may match META_DESC or a shorter variant).
+  {{SLUG}}         - URL filename without extension, e.g. "what-you-need-to-know-about-plantar-fasciitis".
+  {{POST_TITLE}}   - Human post title (breadcrumb last crumb + hero H1 + JSON-LD headline).
+  {{DEK}}          - One warm sentence beneath the H1 (the article dek/subhead).
+  {{DATE}}         - Display "Updated <Month D, YYYY>" line under the dek.
+  {{HERO_IMG}}     - Hero image FILENAME only, e.g. "heel-pain.jpg" (an existing file in /images/).
+                     Used inline as url('../images/{{HERO_IMG}}') and absolute in og:image/JSON-LD image.
+  {{HERO_ALT}}     - Visually-hidden description of the hero image.
+  {{BODY_HTML}}    - The article body: answer-first <strong> lead paragraph (40-60 words) then
+                     answer-first <h2>/<h3>/<p>/<ul> sections inside .prose (~800-1200 words).
+                     Include 3-5 contextual ../ internal links to related condition/service pages.
+                     End with the .detail-reviewed E-E-A-T line. Never fabricate stats.
+  {{FAQ_ITEMS}}    - 4-6 <details class="faq-item"> blocks (see exemplar markup). MUST match FAQ_SCHEMA.
+  {{FAQ_SCHEMA}}   - The FAQPage "mainEntity" Question/Answer array — MUST mirror {{FAQ_ITEMS}} EXACTLY
+                     (same questions, same answer text, same count). Never HowTo.
+  {{RELATED}}      - 3-4 <a class="related-card"> entries linking to related ../<slug>.html pages.
+  {{DATE_PUBLISHED}} - ISO date (YYYY-MM-DD). Use the source post's date if shown; else a generic recent date.
+  {{DATE_MODIFIED}}  - ISO date (YYYY-MM-DD) of this refresh.
+
+  Do not modify css/site.css, js/site.js, partials/*, or netlify.toml when cloning.
+  Add a Netlify 301 from the old /post/<SLUG> path to the new file for SEO continuity.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{META_DESC}}">
+<link rel="canonical" href="https://www.wasatchfai.com/post/{{SLUG}}.html">
+<meta name="author" content="Wasatch Foot &amp; Ankle Institute">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Wasatch Foot &amp; Ankle Institute">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{OG_DESC}}">
+<meta property="og:url" content="https://www.wasatchfai.com/post/{{SLUG}}.html">
+<meta property="og:image" content="https://www.wasatchfai.com/images/{{HERO_IMG}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{TITLE}}">
+<meta name="twitter:description" content="{{OG_DESC}}">
+<meta name="twitter:image" content="https://www.wasatchfai.com/images/{{HERO_IMG}}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:8014517500"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.58l2.2-2.21c.28-.27.36-.66.25-1.01-.37-1.12-.57-2.32-.57-3.57 0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg> Farmington 801-451-7500</a>
+      <a href="tel:8016272122"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.58l2.2-2.21c.28-.27.36-.66.25-1.01-.37-1.12-.57-2.32-.57-3.57 0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg> South Ogden 801-627-2122</a>
+    </div>
+    <div class="topbar-right">
+      <span>Mon–Thu 8a–5p · Fri 8a–12p</span>
+      <div class="social">
+        <a href="#" aria-label="Facebook"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14M8.34 17.34V9.67H5.67v7.67h2.67M7 8.5a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1m11.34 8.84v-4.2c0-2.32-1.5-3.4-3.13-3.4-1.1 0-1.84.6-2.16 1.18V9.67h-2.67v7.67h2.67v-4.27c0-1.06.7-1.6 1.42-1.6.7 0 1.2.5 1.2 1.57v4.3h2.67"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="../index.html" class="logo">
+      <img src="../images/logo-full.png" alt="Wasatch Foot & Ankle Institute">
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../staff.html">Staff</a></li>
+        <li class="has-dropdown">
+          <a href="../services.html">Services</a>
+          <div class="dropdown-menu">
+            <div class="dropdown-cols">
+              <a href="../achilles-tendonitis.html">Achilles Tendonitis</a>
+              <a href="../ankle-fractures.html">Ankle Fractures</a>
+              <a href="../arthritis.html">Arthritis</a>
+              <a href="../bunion-removal.html">Bunion Removal</a>
+              <a href="../calcaneal-fractures.html">Calcaneal Fractures</a>
+              <a href="../charcot-arthropathy.html">Charcot Arthropathy</a>
+              <a href="../conscious-sedation.html">Conscious Sedation</a>
+              <a href="../custom-orthotics.html">Custom Orthotics</a>
+              <a href="../diabetic-foot-care-1.html">Diabetic Foot Care</a>
+              <a href="../dual-syndesmosis-tightrope.html">Dual Syndesmosis TightRope</a>
+              <a href="../fifth-metatarsal-fractures.html">Fifth Metatarsal Fractures</a>
+              <a href="../flat-feet.html">Flat Feet</a>
+              <a href="../gout.html">Gout</a>
+              <a href="../hallux-rigidus.html">Hallux Rigidus</a>
+              <a href="../heel-pain.html">Heel Pain</a>
+              <a href="../ingrown-nails.html">Ingrown Nails</a>
+              <a href="../lapiplasty.html">Lapiplasty</a>
+              <a href="../lateral-ankle-instability.html">Lateral Ankle Instability</a>
+              <a href="../limb-salvage.html">Limb Salvage</a>
+              <a href="../lisfranc-injuries.html">Lisfranc Injuries</a>
+              <a href="../plantar-fasciitis.html">Plantar Fasciitis</a>
+              <a href="../posterior-tibial-tendon.html">Posterior Tibial Tendon</a>
+              <a href="../rheumatoid-arthritis.html">Rheumatoid Arthritis</a>
+              <a href="../tailor-s-bunion.html">Tailor's Bunion</a>
+              <a href="../talar-dome-lesions.html">Talar Dome Lesions</a>
+              <a href="../tarsal-tunnel-syndrome.html">Tarsal Tunnel Syndrome</a>
+              <a href="../toe-metatarsal-fractures.html">Toe & Metatarsal Fractures</a>
+            </div>
+            <a href="../services.html" class="dropdown-all">View All Services →</a>
+          </div>
+        </li>
+        <li><a href="../recovery.html">Recovery</a></li>
+        <li><a href="../farmington-utah.html">Locations</a></li>
+        <li><a href="../blog.html">Blog</a></li>
+        <li><a href="../feedback.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="https://pay.InstaMed.com/WASATCHFOOT" class="btn btn-secondary">Pay a Bill</a>
+      <a href="../book-appointment.html" class="btn btn-primary">Request Appointment</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="container">
+    <ol>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li aria-current="page">{{POST_TITLE}}</li>
+    </ol>
+  </div>
+</nav>
+
+<!-- ARTICLE HERO -->
+<section class="detail-hero" style="background-image:url('../images/{{HERO_IMG}}')">
+  <div class="container detail-hero-inner">
+    <span class="visually-hidden">{{HERO_ALT}}</span>
+    <span class="eyebrow">Blog</span>
+    <h1>{{POST_TITLE}}</h1>
+    <p class="detail-hero-lede">{{DEK}}</p>
+    <p class="detail-hero-lede" style="font-size:.95rem;color:rgba(255,255,255,.8);margin-top:14px">By the physicians at Wasatch Foot &amp; Ankle Institute · {{DATE}}</p>
+  </div>
+</section>
+
+<!-- ARTICLE BODY -->
+<section class="detail-section">
+  <div class="container">
+    <article class="prose">
+      {{BODY_HTML}}
+    </article>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container faq-inner">
+    <div class="faq-head reveal">
+      <span class="eyebrow">Common Questions</span>
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq-list">
+      {{FAQ_ITEMS}}
+    </div>
+  </div>
+</section>
+
+<!-- RELATED ARTICLES / CONDITIONS -->
+<section class="related">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Keep Reading</span>
+      <h2>Related conditions</h2>
+      <p>A few related conditions and services we frequently treat.</p>
+    </div>
+    <div class="related-grid">
+      {{RELATED}}
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="container cta-band-inner reveal">
+    <div>
+      <span class="eyebrow" style="color:#ffe5cc">Ready When You Are</span>
+      <h2>Let's get you back on your feet — pain-free.</h2>
+      <p>Same-day appointments are available for emergencies. Reach out today and let's build a plan that works for you.</p>
+    </div>
+    <div class="cta-band-actions">
+      <a href="../book-appointment.html" class="btn btn-light btn-arrow">Request Appointment</a>
+      <a href="tel:8014517500" class="btn btn-ghost cta-ghost">Call Us Today</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <img src="../images/logo.png" alt="Wasatch FAI" style="height:48px;filter:brightness(0) invert(1)">
+          <div class="logo-text" style="color:#fff">Wasatch Foot &amp; Ankle<span style="color:#ffd6a8">Institute</span></div>
+        </a>
+        <p>Keeping Northern Utah active and on its feet since day one. Two locations, one team, every step of the way.</p>
+      </div>
+      <div>
+        <h4>Care</h4>
+        <ul>
+          <li><a href="../services.html">Services</a></li>
+          <li><a href="../recovery.html">Recovery</a></li>
+          <li><a href="../book-appointment.html">Book Appointment</a></li>
+          <li><a href="https://pay.InstaMed.com/WASATCHFOOT">Pay a Bill</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Clinic</h4>
+        <ul>
+          <li><a href="../staff.html">Our Team</a></li>
+          <li><a href="../farmington-utah.html">Locations</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../feedback.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="../farmington-utah.html">Farmington — 801-451-7500</a></li>
+          <li><a href="../ogden-utah-foot-doctor.html">South Ogden — 801-627-2122</a></li>
+          <li><a href="mailto:contactus@wasatchfai.com">contactus@wasatchfai.com</a></li>
+          <li><a href="../feedback.html">Give Feedback</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Wasatch Foot &amp; Ankle Institute. All rights reserved.</div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14M8.34 17.34V9.67H5.67v7.67h2.67M7 8.5a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1m11.34 8.84v-4.2c0-2.32-1.5-3.4-3.13-3.4-1.1 0-1.84.6-2.16 1.18V9.67h-2.67v7.67h2.67v-4.27c0-1.06.7-1.6 1.42-1.6.7 0 1.2.5 1.2 1.57v4.3h2.67"/></svg></a>
+        <a href="#" aria-label="Yelp"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.65 14.6L6.83 16.5c-.32.13-.69 0-.85-.31-.16-.31-.07-.69.21-.9l4.06-3.06c.4-.3.96.05.85.54l-.29 1.31c-.06.27-.16.4-.36.52zm.85-3.5L9.31 6.95c-.21-.32-.13-.74.18-.95.15-.1.32-.13.49-.1l3.91.81c.46.1.65.66.34.99l-1.18 1.27c-.21.23-.37.27-.55.13zM6.4 10.16L4.65 8.41c-.27-.27-.27-.71 0-.98l3.4-3.4c.39-.39 1.06-.07.97.49l-.74 4.81c-.05.32-.31.55-.62.55-.18-.01-.34-.08-.46-.21l-.8-.51zm6.6 8.34l1.2 4.05c.13.43-.18.85-.6.85-.07 0-.14-.01-.21-.03l-3.78-1.18c-.45-.14-.55-.74-.18-1.02l3.06-2.86c.14-.13.34-.13.51 0z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JSON-LD STRUCTURED DATA (all urls ABSOLUTE) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.wasatchfai.com/post/{{SLUG}}.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.wasatchfai.com/index.html" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.wasatchfai.com/blog.html" },
+        { "@type": "ListItem", "position": 3, "name": "{{POST_TITLE}}", "item": "https://www.wasatchfai.com/post/{{SLUG}}.html" }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://www.wasatchfai.com/post/{{SLUG}}.html#article",
+      "headline": "{{POST_TITLE}}",
+      "description": "{{META_DESC}}",
+      "image": "https://www.wasatchfai.com/images/{{HERO_IMG}}",
+      "url": "https://www.wasatchfai.com/post/{{SLUG}}.html",
+      "inLanguage": "en-US",
+      "datePublished": "{{DATE_PUBLISHED}}",
+      "dateModified": "{{DATE_MODIFIED}}",
+      "mainEntityOfPage": { "@id": "https://www.wasatchfai.com/post/{{SLUG}}.html" },
+      "breadcrumb": { "@id": "https://www.wasatchfai.com/post/{{SLUG}}.html#breadcrumb" },
+      "author": { "@id": "https://www.wasatchfai.com/#clinic" },
+      "publisher": { "@id": "https://www.wasatchfai.com/#clinic" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.wasatchfai.com/post/{{SLUG}}.html#faq",
+      "mainEntity": [
+        {{FAQ_SCHEMA}}
+      ]
+    },
+    {
+      "@type": "MedicalClinic",
+      "@id": "https://www.wasatchfai.com/#clinic",
+      "name": "Wasatch Foot & Ankle Institute",
+      "url": "https://www.wasatchfai.com/",
+      "logo": "https://www.wasatchfai.com/images/logo-full.png",
+      "image": "https://www.wasatchfai.com/images/logo-full.png",
+      "email": "contactus@wasatchfai.com",
+      "medicalSpecialty": "Podiatric",
+      "priceRange": "$$",
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Davis County, Utah" },
+        { "@type": "AdministrativeArea", "name": "Weber County, Utah" }
+      ],
+      "department": [
+        {
+          "@type": "MedicalClinic",
+          "@id": "https://www.wasatchfai.com/farmington-utah.html#clinic",
+          "name": "Wasatch Foot & Ankle Institute — Farmington",
+          "url": "https://www.wasatchfai.com/farmington-utah.html",
+          "telephone": "+1-801-451-7500",
+          "email": "contactus@wasatchfai.com",
+          "parentOrganization": { "@id": "https://www.wasatchfai.com/#clinic" },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "473 W. Bourne Circle, Suite 2",
+            "addressLocality": "Farmington",
+            "addressRegion": "UT",
+            "postalCode": "84025",
+            "addressCountry": "US"
+          },
+          "geo": { "@type": "GeoCoordinates", "latitude": 40.9869, "longitude": -111.9066 },
+          "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "08:00", "closes": "17:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "12:00" }
+          ]
+        },
+        {
+          "@type": "MedicalClinic",
+          "@id": "https://www.wasatchfai.com/ogden-utah-foot-doctor.html#clinic",
+          "name": "Wasatch Foot & Ankle Institute — South Ogden",
+          "url": "https://www.wasatchfai.com/ogden-utah-foot-doctor.html",
+          "telephone": "+1-801-627-2122",
+          "email": "contactus@wasatchfai.com",
+          "parentOrganization": { "@id": "https://www.wasatchfai.com/#clinic" },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "945 Chambers Street, Suite 3",
+            "addressLocality": "South Ogden",
+            "addressRegion": "UT",
+            "postalCode": "84403",
+            "addressCountry": "US"
+          },
+          "geo": { "@type": "GeoCoordinates", "latitude": 41.1725, "longitude": -111.9580 },
+          "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "08:00", "closes": "17:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "12:00" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="../js/site.js" defer></script>
+</body>
+</html>
