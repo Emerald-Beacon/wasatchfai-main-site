@@ -154,18 +154,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============ SERVICES SEARCH FILTER ============
   if (document.getElementById('serviceSearch')) {
     const input = document.getElementById('serviceSearch');
-    const cards = Array.from(document.querySelectorAll('#servicesGrid .help-card'));
+    const items = Array.from(document.querySelectorAll('#servicesGrid [data-name]'));
+    const groups = Array.from(document.querySelectorAll('#servicesGrid .svc-group'));
     const empty = document.getElementById('servicesEmpty');
     const status = document.getElementById('servicesStatus');
-    if (input && cards.length) {
+    if (input && items.length) {
       input.addEventListener('input', () => {
         const q = input.value.trim().toLowerCase();
         let visible = 0;
-        cards.forEach(card => {
-          const haystack = (card.dataset.name || '') + ' ' + card.textContent.toLowerCase();
-          const match = q === '' || haystack.toLowerCase().includes(q);
-          card.style.display = match ? '' : 'none';
+        items.forEach(item => {
+          // include the group heading: someone searching "diabetic" wants
+          // Charcot and limb salvage too, neither of which says the word
+          const group = item.closest('.svc-group');
+          const heading = group ? group.querySelector('h3').textContent : '';
+          const haystack = ((item.dataset.name || '') + ' ' + heading + ' ' + item.textContent).toLowerCase();
+          const match = q === '' || haystack.includes(q);
+          item.hidden = !match;
           if (match) visible++;
+        });
+        // a group with nothing left in it should go too, heading and all
+        groups.forEach(g => {
+          g.hidden = !g.querySelector('[data-name]:not([hidden])');
         });
         if (empty) empty.hidden = visible !== 0;
         if (status) {

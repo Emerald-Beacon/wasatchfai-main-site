@@ -185,7 +185,56 @@ section{padding:110px 0}
 .help-card a{color:var(--blue);font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:6px}
 .help-card a:hover{color:var(--orange)}
 
-/* ============ SERVICES INDEX ============ */
+/* ============ SERVICES INDEX ============
+   Typographic, grouped by where it hurts. The old photo grid ran 27 services
+   across 5 stock images — Heel Pain and Plantar Fasciitis sat side by side
+   under the identical picture — so the images carried no information and
+   adjacent duplicates read as a fault. People arrive knowing where it hurts,
+   not what it is called. */
+.svc-index{display:grid;gap:56px}
+/* these groups are <section> elements nested inside one, so the global
+   section{padding:110px 0} would otherwise stack 220px between each */
+.svc-group{padding:0;scroll-margin-top:120px}
+.svc-group-head{
+  display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 16px;
+  padding-bottom:14px;margin-bottom:22px;border-bottom:2px solid var(--line);
+}
+.svc-group-head h3{font-size:1.5rem;margin:0}
+.svc-group-head p{grid-column:1;font-size:.95rem;margin:0;color:var(--ink-soft)}
+.svc-count{
+  grid-row:1;grid-column:2;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.svc-count::after{content:" conditions";letter-spacing:.06em}
+.svc-group:has(.svc-list > li:only-child) .svc-count::after{content:" condition"}
+
+.svc-list{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:4px 28px;
+}
+.svc-list > li{margin:0}
+.svc-list a{
+  display:grid;gap:3px;padding:14px 16px;margin:0 -16px;border-radius:12px;
+  border:1px solid transparent;
+  transition:background .2s ease,border-color .2s ease;
+}
+.svc-name{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.08rem;
+  color:var(--ink);line-height:1.25;
+}
+.svc-name::after{
+  content:"→";margin-left:8px;color:var(--blue);
+  opacity:0;transform:translateX(-4px);
+  display:inline-block;transition:opacity .2s ease,transform .2s ease;
+}
+.svc-blurb{font-size:.9rem;line-height:1.5;color:var(--ink-soft)}
+.svc-list a:hover{background:var(--white);border-color:var(--line)}
+.svc-list a:hover .svc-name{color:var(--blue-dark)}
+.svc-list a:hover .svc-name::after{opacity:1;transform:none}
+.svc-list a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.svc-group[hidden]{display:none}
+
 .card-token{display:flex;align-items:center;justify-content:center;background:var(--tok,var(--blue-soft))}
 .card-token span{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.8rem;color:#fff;opacity:.9}
 .services-filter{
@@ -276,14 +325,29 @@ section{padding:110px 0}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px}
 .team-card{text-align:center;transition:transform .35s ease}
 .team-card:hover{transform:translateY(-6px)}
+/* The physicians are the strongest thing on the page; they need to be
+   reachable, and to say what they treat before they say their letters. */
+.team-card-link{display:block}
+.team-card-link:focus-visible{outline:3px solid var(--blue);outline-offset:6px;border-radius:var(--r-lg)}
 .team-photo{
   aspect-ratio:1;border-radius:50%;overflow:hidden;
   width:78%;margin:0 auto 22px;box-shadow:var(--shadow);
   border:5px solid #fff;position:relative;
 }
 .team-photo img{width:100%;height:100%;object-fit:cover}
-.team-card h3{font-size:1.25rem;margin-bottom:4px}
-.team-creds{font-size:.82rem;color:var(--sage-dark);font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.team-card h3{font-size:1.25rem;margin-bottom:6px}
+.team-focus{
+  font-size:.92rem;line-height:1.45;color:var(--ink-soft);
+  max-width:22ch;margin:0 auto 8px;
+}
+/* no text-transform: it was rendering Dr. Murrah's doctorate as "PHD" */
+.team-creds{font-size:.78rem;color:var(--sage-dark);font-weight:600;letter-spacing:.06em}
+.team-more{
+  display:inline-block;margin-top:12px;font-size:.88rem;font-weight:600;color:var(--blue);
+}
+.team-more::after{content:"→";margin-left:6px;transition:transform .2s ease;display:inline-block}
+.team-card-link:hover .team-more{color:var(--orange)}
+.team-card-link:hover .team-more::after{transform:translateX(3px)}
 
 /* ============ INSURANCE ============ */
 .insurance{background:var(--white);padding:70px 0;border-top:1px solid var(--line)}
@@ -603,9 +667,16 @@ footer ul a:hover{color:#ffd6a8}
 }
 .physician-photo img{width:100%;height:100%;object-fit:cover}
 .physician-body h2{margin-bottom:4px}
+/* no text-transform here either — "PhD" is not "PHD" */
 .physician-creds{
   font-size:.82rem;color:var(--sage-dark);font-weight:600;
-  letter-spacing:.05em;text-transform:uppercase;margin-bottom:18px;display:block;
+  letter-spacing:.06em;margin-bottom:10px;display:block;
+}
+.physician-row{scroll-margin-top:120px}
+.physician-focus{
+  font-size:1rem;line-height:1.5;color:var(--ink);font-weight:500;
+  margin:0 0 20px;padding:12px 16px;
+  background:var(--sand);border-left:3px solid var(--sage);border-radius:0 var(--r) var(--r) 0;
 }
 .physician-body p{margin-bottom:14px;font-size:1.02rem}
 
