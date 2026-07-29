@@ -440,14 +440,73 @@ footer ul a:hover{color:#ffd6a8}
 .detail-layout{
   display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:60px;align-items:start;
 }
-.detail-body{max-width:720px;font-size:1.05rem}
-.detail-body h2{margin:44px 0 16px}
+/* Articles get their own scale, separate from the marketing sections. A 48px
+   heading repeated eight times down a 1,100-word page is a stack of posters,
+   not a document; and 720px at this size ran 84 characters to the line. */
+.detail-body{max-width:60ch;font-size:1.0625rem}
+.detail-body h2{font-size:1.75rem;margin:46px 0 14px;scroll-margin-top:120px}
 .detail-body h2:first-child{margin-top:0}
-.detail-body h3{font-size:1.15rem;margin:26px 0 12px}
-.detail-body p{margin-bottom:16px;font-size:1.02rem}
+.detail-body h3{font-size:1.25rem;margin:28px 0 12px}
+.detail-body p{margin-bottom:16px;font-size:1.0625rem;line-height:1.7}
 .detail-body ul{margin:0 0 20px;padding-left:22px;color:var(--ink-soft)}
-.detail-body ul li{margin-bottom:8px;line-height:1.55}
-.detail-aside{position:sticky;top:110px}
+.detail-body ul li{margin-bottom:9px;line-height:1.6}
+.detail-aside{position:sticky;top:110px;display:grid;gap:20px}
+
+/* ============ ON THIS PAGE (article contents) ============
+   Built by site.js from the h2 ids already in the markup, so a new page picks
+   it up with no extra work. Sits in the sticky rail on desktop and collapses
+   to a summary at the top of the article on phones. */
+.toc{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:22px 24px;box-shadow:var(--shadow-sm);
+}
+.toc > summary{
+  font-family:'Inter',sans-serif;font-size:.78rem;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:700;color:var(--sage-dark);
+  cursor:pointer;list-style:none;display:flex;justify-content:space-between;
+  align-items:center;gap:12px;
+}
+.toc > summary::-webkit-details-marker{display:none}
+.toc > summary::after{
+  content:"";width:9px;height:9px;flex-shrink:0;
+  border-right:2px solid var(--sage-dark);border-bottom:2px solid var(--sage-dark);
+  transform:rotate(45deg) translateY(-2px);transition:transform .2s ease;
+}
+.toc[open] > summary::after{transform:rotate(-135deg) translateY(-2px)}
+.toc > summary:focus-visible{outline:3px solid var(--blue);outline-offset:4px;border-radius:4px}
+/* Two-class selectors throughout: this component is injected inside .prose and
+   .detail-body, whose own ol/li/a rules would otherwise win on source order. */
+.toc .toc-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:2px;counter-reset:toc}
+.toc .toc-list li{counter-increment:toc;margin:0;list-style:none}
+.toc .toc-list li::marker{content:none}
+.toc .toc-link{
+  display:flex;gap:10px;padding:7px 10px;margin:0 -10px;border-radius:8px;
+  font-size:.92rem;line-height:1.4;color:var(--ink-soft);
+  text-decoration:none;transition:background .18s,color .18s;
+}
+.toc .toc-link::before{
+  content:counter(toc);flex-shrink:0;min-width:1.1em;
+  font-size:.78rem;font-weight:700;color:var(--muted);padding-top:.15em;
+  font-variant-numeric:tabular-nums;
+}
+.toc .toc-link:hover{background:var(--blue-soft);color:var(--blue-dark);text-decoration:none}
+.toc .toc-link:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.toc .toc-link[aria-current="true"]{color:var(--blue-dark);font-weight:600}
+.toc .toc-link[aria-current="true"]::before{color:var(--blue)}
+/* inline mount: blog posts, and every template on a phone */
+.detail-body > .toc,.prose > .toc{margin:0 0 34px;background:var(--sand);box-shadow:none}
+.prose h2{scroll-margin-top:120px}
+
+/* Shortcut to the urgency guidance, which sits late in document order. */
+.aside-urgent{
+  display:flex;gap:12px;align-items:flex-start;
+  margin:0 0 20px;padding:14px 16px;border-radius:12px;
+  background:var(--sand);border-left:3px solid var(--orange);
+  font-size:.92rem;line-height:1.45;color:var(--ink);
+}
+.aside-urgent svg{color:var(--orange);flex-shrink:0;margin-top:2px}
+.aside-urgent a{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.aside-urgent a:hover{color:var(--blue-dark)}
 .aside-card{
   background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:30px;box-shadow:var(--shadow);
@@ -466,7 +525,9 @@ footer ul a:hover{color:#ffd6a8}
 .aside-btn{width:100%;justify-content:center}
 
 /* ============ PROSE (simple content pages: recovery, forms, pricing, feedback, etc.) ============ */
-.prose{max-width:68ch;margin:0 auto;font-size:1.05rem}
+/* 60ch, not 68 — the ch unit measures "0", which runs wider than the average
+   lowercase glyph, so 68ch was landing around 82 characters to the line. */
+.prose{max-width:60ch;margin:0 auto;font-size:1.05rem}
 .prose h2{font-size:1.7rem;margin:48px 0 18px}
 .prose h2:first-child{margin-top:0}
 .prose h3{font-size:1.25rem;margin:30px 0 12px}
@@ -628,6 +689,8 @@ footer ul a:hover{color:#ffd6a8}
   .about-imagery{max-width:480px;margin:0 auto}
   .detail-layout{grid-template-columns:1fr;gap:40px}
   .detail-aside{position:static;max-width:480px}
+  .detail-body > .toc{margin:0 0 30px}
+  .detail-body{max-width:none}
   .detail-hero{padding:70px 0}
   .loc-layout{grid-template-columns:1fr;gap:28px}
   .loc-map-wrap{min-height:280px}
@@ -693,6 +756,7 @@ footer ul a:hover{color:#ffd6a8}
   .hero-slide{transition:opacity .01s, visibility 0s}
   /* Content must never depend on an animation to become visible. */
   .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
   .help-card:hover,.team-card:hover,.related-card:hover,.btn-primary:hover{transform:none}
   .help-card:hover .help-card-img img{transform:none}
 }

@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   window.addEventListener('load', () => setTimeout(sweep, 400));
   document.addEventListener('visibilitychange', () => { if (!document.hidden) sweep(); });
+  // A jump link can land far past anything the observer has seen.
+  window.addEventListener('hashchange', () => setTimeout(sweep, 50));
 
   // Mobile menu
   const toggle = document.getElementById('menuToggle');
@@ -174,6 +176,82 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+
+  // ============ ON THIS PAGE ============
+  // A condition page runs eight sections and 1,100+ words with no way in.
+  // Build the contents from the h2 ids already in the markup.
+  (function initToc() {
+    const article = document.querySelector('.detail-body, .prose');
+    const aside = document.querySelector('.detail-aside');
+    if (!article) return;
+    const heads = [...article.querySelectorAll('h2[id]')];
+    if (heads.length < 3) return;
+
+    const toc = document.createElement('details');
+    toc.className = 'toc';
+    const summary = document.createElement('summary');
+    summary.textContent = 'On this page';
+    toc.appendChild(summary);
+
+    const list = document.createElement('ol');
+    list.className = 'toc-list';
+    const links = heads.map(h => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.className = 'toc-link';
+      a.href = '#' + h.id;
+      a.textContent = h.textContent.trim();
+      li.appendChild(a);
+      list.appendChild(li);
+      return a;
+    });
+    toc.appendChild(list);
+
+    // Desktop keeps it open in the sticky rail; phones get it collapsed at the
+    // top of the article, where the rail no longer is.
+    const wide = window.matchMedia('(min-width: 981px)');
+    const place = () => {
+      if (wide.matches && aside) {
+        toc.open = true;
+        if (toc.parentElement !== aside) aside.insertBefore(toc, aside.firstChild);
+      } else {
+        // Blog posts have no rail, so the contents sit inline — open on a wide
+        // screen where there is room, collapsed on a phone where there isn't.
+        toc.open = wide.matches;
+        if (toc.parentElement !== article) article.insertBefore(toc, article.firstChild);
+      }
+    };
+    place();
+    wide.addEventListener('change', place);
+
+    // Highlight the section being read.
+    let active = null;
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const i = heads.indexOf(e.target);
+        if (i < 0) return;
+        if (active) active.removeAttribute('aria-current');
+        active = links[i];
+        active.setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+    heads.forEach(h => spy.observe(h));
+
+    // Surface the urgency guidance, which sits seventh of eight in the article.
+    const urgent = heads.find(h => /when should you see|when to see|warning signs?/i.test(h.textContent));
+    const card = aside && aside.querySelector('.aside-card');
+    if (urgent && card) {
+      const note = document.createElement('p');
+      note.className = 'aside-urgent';
+      note.innerHTML =
+        '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">'
+        + '<path d="M12 2 1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v5h2v-5z"/></svg>'
+        + '<span>Not sure whether this needs a visit? Read <a href="#' + urgent.id + '">'
+        + urgent.textContent.trim().replace(/\?$/, '').toLowerCase() + '</a>.</span>';
+      card.insertBefore(note, card.querySelector('.aside-phones'));
+    }
+  })();
 
   // ============ CURSOR FOOTPRINTS (desktop mouse only) ============
   (function initFootprints() {
