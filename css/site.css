@@ -2,15 +2,17 @@
   --blue:#1f5c8c;
   --blue-dark:#15426a;
   --blue-soft:#eaf2f9;
-  --sage:#7ba087;
-  --sage-dark:#5a7e67;
+  /* Greens and orange deepened so white text on them clears WCAG AA (4.5:1).
+     Same hues, lower lightness — the palette's character is unchanged. */
+  --sage:#4a7159;        /* white on this: 5.53:1 (was #7ba087, 2.91:1) */
+  --sage-dark:#41604c;   /* eyebrows/creds on cream: 6.60:1 (was #5a7e67, 4.30:1) */
   --sand:#f6f1e8;
   --cream:#fbf8f3;
-  --orange:#e8763a;
-  --orange-dark:#c95f25;
+  --orange:#b4541f;      /* white on this: 4.97:1 (was #e8763a, 2.96:1) */
+  --orange-dark:#93430f;
   --ink:#1d2733;
   --ink-soft:#4a5663;
-  --muted:#7a8492;
+  --muted:#5c6675;       /* on cream: 5.49:1 (was #7a8492, 3.58:1) */
   --line:#e7e2d8;
   --white:#ffffff;
   --shadow-sm:0 2px 8px rgba(29,39,51,.06);
@@ -53,8 +55,8 @@ p{color:var(--ink-soft)}
   border:none;cursor:pointer;transition:all .25s ease;font-family:inherit;
   white-space:nowrap;
 }
-.btn-primary{background:var(--orange);color:#fff;box-shadow:0 8px 20px rgba(232,118,58,.35)}
-.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 28px rgba(232,118,58,.45)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 8px 20px rgba(180,84,31,.32)}
+.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 28px rgba(180,84,31,.42)}
 .btn-secondary{background:var(--white);color:var(--blue);border:1.5px solid var(--blue)}
 .btn-secondary:hover{background:var(--blue);color:#fff}
 .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid rgba(29,39,51,.18)}
@@ -83,8 +85,8 @@ p{color:var(--ink-soft)}
   position:sticky;top:0;z-index:100;
 }
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:30px}
-.logo{display:flex;align-items:center;gap:12px}
-.logo img{height:58px;width:auto}
+.logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.logo img{height:58px;width:auto;flex-shrink:0}
 .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;line-height:1.1;color:var(--blue-dark)}
 .logo-text span{display:block;font-size:.7rem;color:var(--sage-dark);letter-spacing:.15em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;margin-top:3px}
 nav.main-nav ul{display:flex;list-style:none;gap:30px;align-items:center}
@@ -100,12 +102,18 @@ nav.main-nav a::after{
 nav.main-nav a:hover::after{width:100%}
 .header-cta{display:flex;gap:10px;align-items:center}
 .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
-.menu-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:all .25s}
+.menu-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:transform .25s,opacity .25s}
+.menu-toggle.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-toggle.is-open span:nth-child(2){opacity:0}
+.menu-toggle.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.menu-toggle:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
 
 /* ============ NAV DROPDOWN (Services mega menu) ============ */
 nav.main-nav li.has-dropdown{position:relative}
-nav.main-nav li.has-dropdown > a::before{
-  content:"";display:inline-block;margin-left:5px;
+/* Caret lives on the <li>, not the <a>: putting it on the link would collide
+   with the a::after hover underline above. */
+nav.main-nav li.has-dropdown::after{
+  content:"";display:inline-block;margin-left:6px;
   border-left:4px solid transparent;border-right:4px solid transparent;
   border-top:5px solid currentColor;vertical-align:middle;opacity:.6;
 }
@@ -252,11 +260,16 @@ section{padding:110px 0}
 }
 .promo-image{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:5/4}
 .promo-image img{width:100%;height:100%;object-fit:cover}
+/* A logo lockup is not a photograph — show all of it instead of cropping. */
+.promo-image.is-logo{background:var(--white);display:grid;place-items:center;padding:40px;aspect-ratio:5/4}
+.promo-image.is-logo img{width:100%;height:auto;max-height:100%;object-fit:contain}
 .btn-light{background:#fff;color:var(--sage-dark)}
 .btn-light:hover{background:var(--sand)}
 
-.promo.diabetic{background:linear-gradient(120deg,#d4a574 0%,#b58453 100%)}
-.promo.diabetic .btn-light{color:#8a5e30}
+/* Deepened from #d4a574→#b58453 (white body copy measured 2.23:1). The diabetic
+   audience has the highest rate of contrast-sensitivity loss on the site. */
+.promo.diabetic{background:linear-gradient(120deg,#8a5a2e 0%,#6d451f 100%)}
+.promo.diabetic .btn-light{color:#6d451f}
 
 /* ============ TEAM ============ */
 .team{background:var(--cream)}
@@ -600,8 +613,10 @@ footer ul a:hover{color:#ffd6a8}
 .faq-answer a:hover{color:var(--blue-dark);text-decoration-color:var(--blue-dark)}
 
 /* ============ ANIMATIONS ============ */
-.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
+/* Gated on .js-reveal, which site.js sets the moment it runs. Without
+   JavaScript the class never lands and the content simply stays visible. */
+.js-reveal .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
+.js-reveal .reveal.in{opacity:1;transform:none}
 
 /* ============ RESPONSIVE ============ */
 @media (max-width:980px){
@@ -622,12 +637,23 @@ footer ul a:hover{color:#ffd6a8}
   .cta-band-inner{flex-direction:column;align-items:flex-start;text-align:left}
   .footer-grid{grid-template-columns:1fr 1fr;gap:30px}
   section{padding:80px 0}
+  /* Anchored to the header, not a hard-coded 72px, so the panel always opens
+     directly below it. Closed state is fully inert: a hidden panel must not
+     cover or intercept the topbar phone links sitting underneath it. */
   nav.main-nav{
-    position:fixed;inset:72px 0 auto 0;background:var(--cream);
+    position:absolute;top:100%;left:0;right:0;background:var(--cream);
     border-bottom:1px solid var(--line);padding:20px 28px;
-    transform:translateY(-120%);transition:transform .3s;
+    max-height:calc(100vh - 80px);overflow-y:auto;
+    box-shadow:var(--shadow);
+    transform:translateY(-10px);opacity:0;
+    visibility:hidden;pointer-events:none;
+    transition:transform .25s ease,opacity .25s ease,visibility 0s linear .25s;
   }
-  nav.main-nav.open{transform:none}
+  nav.main-nav.open{
+    transform:none;opacity:1;
+    visibility:visible;pointer-events:auto;
+    transition:transform .25s ease,opacity .25s ease,visibility 0s;
+  }
   nav.main-nav ul{flex-direction:column;align-items:flex-start;gap:18px}
   .menu-toggle{display:block}
   .header-cta .btn-secondary{display:none}
@@ -639,7 +665,11 @@ footer ul a:hover{color:#ffd6a8}
   }
   nav.main-nav li.has-dropdown.open .dropdown-menu{display:block}
   .dropdown-cols{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row;max-height:none}
-  nav.main-nav li.has-dropdown > a::before{float:right;margin-top:8px}
+  /* Stacked panel: link and caret share a row, submenu wraps below both. */
+  nav.main-nav li.has-dropdown{display:flex;flex-wrap:wrap;align-items:center}
+  nav.main-nav li.has-dropdown::after{order:1;margin-left:8px}
+  nav.main-nav li.has-dropdown .dropdown-menu{order:2;flex:0 0 100%}
+  nav.main-nav li.has-dropdown.open::after{transform:rotate(180deg)}
 }
 @media (max-width:600px){
   .hero-slide::before{
@@ -653,9 +683,45 @@ footer ul a:hover{color:#ffd6a8}
   .topbar{font-size:.78rem}
   .topbar .container{justify-content:center;text-align:center}
   .insurance-row{gap:24px;font-size:1rem}
+  /* The call bar carries Request at this width, so the header drops its
+     duplicate and gives the logo the room it needs. */
+  .header-cta .btn-primary{display:none}
+  .logo img{height:46px}
+  .header-inner{gap:14px;padding:14px 0}
 }
 @media (prefers-reduced-motion:reduce){
   .hero-slide{transition:opacity .01s, visibility 0s}
+  /* Content must never depend on an animation to become visible. */
+  .reveal{opacity:1;transform:none;transition:none}
+  .help-card:hover,.team-card:hover,.related-card:hover,.btn-primary:hover{transform:none}
+  .help-card:hover .help-card-img img{transform:none}
+}
+
+/* ============ MOBILE CALL BAR ============
+   On a phone the topbar scrolls away and the appointment card can sit thousands
+   of pixels down a condition page. This keeps both clinics one tap away. */
+.callbar{display:none}
+@media (max-width:980px){
+  .callbar{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    position:fixed;left:0;right:0;bottom:0;z-index:200;
+    background:var(--white);border-top:1px solid var(--line);
+    box-shadow:0 -6px 24px rgba(29,39,51,.14);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .callbar a{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:4px;padding:10px 6px;min-height:58px;
+    font-size:.76rem;font-weight:600;line-height:1.15;text-align:center;
+    color:var(--blue-dark);
+  }
+  .callbar a + a{border-left:1px solid var(--line)}
+  .callbar a:active{background:var(--blue-soft)}
+  .callbar a:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+  .callbar .callbar-book{background:var(--orange);color:#fff;border-left-color:var(--orange)}
+  .callbar .callbar-book:active{background:var(--orange-dark)}
+  /* keep the bar from covering the last of the footer */
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))}
 }
 
 /* ============ CURSOR FOOTPRINTS ============ */

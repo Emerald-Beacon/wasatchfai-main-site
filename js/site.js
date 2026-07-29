@@ -1,13 +1,54 @@
+// Opt in to the scroll-reveal styling only once this script is running, so a
+// failed or blocked script can never leave content stuck at opacity 0.
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('js-reveal');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Reveal on scroll — set up first so a fault anywhere below cannot leave
+  // sections invisible.
+  const show = (el) => { el.classList.add('in'); io.unobserve(el); };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) show(e.target); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Chrome throttles IntersectionObserver in background tabs, which can leave
+  // whole sections blank when a page loads unfocused or from a restored
+  // session. Sweep anything already at or above the fold.
+  const sweep = () => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight + 100) show(el);
+    });
+  };
+  window.addEventListener('load', () => setTimeout(sweep, 400));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) sweep(); });
+
   // Mobile menu
   const toggle = document.getElementById('menuToggle');
   const nav = document.getElementById('mainNav');
   if (toggle && nav) {
-    toggle.addEventListener('click', () => nav.classList.toggle('open'));
+    if (!nav.id) nav.id = 'mainNav';
+    toggle.setAttribute('aria-controls', nav.id);
+    const setMenu = (open) => {
+      nav.classList.toggle('open', open);
+      toggle.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    };
+    setMenu(false);
+    toggle.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
     nav.querySelectorAll('a').forEach(a => {
       if (!a.closest('.has-dropdown') || a.closest('.dropdown-menu')) {
-        a.addEventListener('click', () => nav.classList.remove('open'));
+        a.addEventListener('click', () => setMenu(false));
       }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); toggle.focus(); }
+    });
+    document.addEventListener('click', (e) => {
+      if (!nav.classList.contains('open')) return;
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) setMenu(false);
     });
   }
 
@@ -23,17 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hero carousel
   initCarousel();
-
-  // Reveal on scroll
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   // ============ HERO CAROUSEL ============
   function initCarousel() {
