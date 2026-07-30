@@ -166,8 +166,11 @@ section{padding:110px 0}
 .section-head p{font-size:1.1rem;margin-top:14px}
 
 /* ============ HOW WE HELP ============ */
+/* 300px, not 240: six cards fell into a four-column grid and left two orphans
+   on a second row. At 300 the grid resolves to 3 / 2 / 1 columns, all of which
+   divide six evenly. */
 .help-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;
 }
 .help-card{
   background:var(--white);border-radius:var(--r-lg);overflow:hidden;
@@ -357,6 +360,11 @@ section{padding:110px 0}
   font-family:'Fraunces',serif;font-weight:600;color:var(--blue-dark);font-size:1.15rem;
 }
 .insurance-row span{opacity:.7}
+/* "will you take my plan?" is one of the highest-anxiety questions a patient
+   has, and this strip used to be a dead end */
+.insurance-link{text-align:center;margin-top:26px}
+.insurance-link a{color:var(--blue);font-weight:600;font-size:.95rem}
+.insurance-link a:hover{color:var(--orange)}
 
 /* ============ CONTACT ============ */
 .contact{background:var(--blue-dark);color:#fff;position:relative;overflow:hidden}
@@ -383,6 +391,13 @@ section{padding:110px 0}
 .location a:hover{border-color:#ffd6a8;color:#ffd6a8}
 .hours{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);font-size:.88rem;color:rgba(255,255,255,.75)}
 .hours strong{color:#fff;display:block;margin-bottom:6px;font-size:.9rem}
+/* the clinic cards named a location but gave no way to reach its page */
+.location-more{
+  display:inline-block;margin-top:16px;font-size:.92rem;font-weight:600;color:#ffd6a8;
+  border-bottom:1px solid rgba(255,214,168,.4);padding-bottom:2px;
+}
+.location-more:hover{color:#fff;border-bottom-color:#fff}
+.location-more:focus-visible{outline:2px solid #ffd6a8;outline-offset:3px;border-radius:3px}
 
 .contact-form{
   background:#fff;color:var(--ink);border-radius:var(--r-lg);padding:38px;
