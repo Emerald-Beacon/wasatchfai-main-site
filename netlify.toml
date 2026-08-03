@@ -12,37 +12,29 @@
 # production canonicals pointing at URLs that 404 on the live domain -- a
 # staging leak and a duplicate-content risk against the eventual launch.
 #
-# Deploy Previews and Branch Deploys are noindexed unconditionally. The
-# production context is noindexed too FOR AS LONG AS the Netlify subdomain is
-# the only thing serving this site.
+# X-Robots-Tag is set GLOBALLY and deliberately.
 #
-# >>> AT DOMAIN CUTOVER: delete the [context.production] block below, or the
-# >>> real wasatchfai.com will launch noindexed. This fails closed by design.
+# It was first written as [context.production.headers] /
+# [context.deploy-preview.headers] blocks. Those parsed without error and did
+# nothing: Netlify does NOT support context-specific headers in netlify.toml
+# (headers and redirects here are global only -- only build settings and
+# environment variables are context-aware). Verified against the live deploy --
+# the global block's nosniff and Referrer-Policy were present on the response
+# while the context block's X-Robots-Tag was absent. Do not reintroduce the
+# context form; it fails silently, which is the worst way for a noindex to fail.
+#
+# >>> AT DOMAIN CUTOVER: delete the X-Robots-Tag line below, or the real
+# >>> wasatchfai.com will launch noindexed. This fails closed by design: while
+# >>> the Netlify subdomain is the only thing serving this site, nothing here
+# >>> should be indexable.
 # ---------------------------------------------------------------------------
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-
-[context.deploy-preview]
-  [[context.deploy-preview.headers]]
-    for = "/*"
-    [context.deploy-preview.headers.values]
-      X-Robots-Tag = "noindex, nofollow"
-
-[context.branch-deploy]
-  [[context.branch-deploy.headers]]
-    for = "/*"
-    [context.branch-deploy.headers.values]
-      X-Robots-Tag = "noindex, nofollow"
-
-# REMOVE THIS BLOCK AT DOMAIN CUTOVER -- see note above.
-[context.production]
-  [[context.production.headers]]
-    for = "/*"
-    [context.production.headers.values]
-      X-Robots-Tag = "noindex, nofollow"
+    # REMOVE AT DOMAIN CUTOVER -- see note above.
+    X-Robots-Tag = "noindex, nofollow"
 
 # ---------------------------------------------------------------------------
 # REDIRECTS
