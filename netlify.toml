@@ -4,14 +4,131 @@
 [build]
   publish = "."
 
+# ---------------------------------------------------------------------------
+# STAGING IS NOT PRODUCTION
+#
+# www.wasatchfai.com is still served by Wix. This repo deploys to
+# wasatchfai.netlify.app, where all 175+ pages were previously crawlable with
+# production canonicals pointing at URLs that 404 on the live domain -- a
+# staging leak and a duplicate-content risk against the eventual launch.
+#
+# Deploy Previews and Branch Deploys are noindexed unconditionally. The
+# production context is noindexed too FOR AS LONG AS the Netlify subdomain is
+# the only thing serving this site.
+#
+# >>> AT DOMAIN CUTOVER: delete the [context.production] block below, or the
+# >>> real wasatchfai.com will launch noindexed. This fails closed by design.
+# ---------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[context.deploy-preview]
+  [[context.deploy-preview.headers]]
+    for = "/*"
+    [context.deploy-preview.headers.values]
+      X-Robots-Tag = "noindex, nofollow"
+
+[context.branch-deploy]
+  [[context.branch-deploy.headers]]
+    for = "/*"
+    [context.branch-deploy.headers.values]
+      X-Robots-Tag = "noindex, nofollow"
+
+# REMOVE THIS BLOCK AT DOMAIN CUTOVER -- see note above.
+[context.production]
+  [[context.production.headers]]
+    for = "/*"
+    [context.production.headers.values]
+      X-Robots-Tag = "noindex, nofollow"
+
+# ---------------------------------------------------------------------------
+# REDIRECTS
+# ---------------------------------------------------------------------------
+
 # Preserve the old (misspelled) live-site URL for inbound links & SEO.
 [[redirects]]
   from = "/ankle-franctures"
   to = "/ankle-fractures.html"
   status = 301
 
-# Redirect rules (add more as needed in the future)
-# [[redirects]]
-#   from = "/*"
-#   to = "/index.html"
-#   status = 200
+# Ogden consolidation. ogden.html and ogden-utah-foot-doctor.html both targeted
+# Ogden podiatry intent; ogden.html was orphaned and its own schema sameAs
+# pointed at the other page. The city page is now ogden-utah.html (serving
+# Ogden) and the clinic page remains ogden-utah-foot-doctor.html (the South
+# Ogden address). ogden.html is retired.
+[[redirects]]
+  from = "/ogden.html"
+  to = "/ogden-utah.html"
+  status = 301
+
+[[redirects]]
+  from = "/ogden"
+  to = "/ogden-utah.html"
+  status = 301
+
+# The old locations entry point was the Farmington page, which made Farmington
+# the de facto index and left every other city unreachable. /locations is now
+# the hub; Farmington keeps its own URL as a clinic page.
+[[redirects]]
+  from = "/locations"
+  to = "/locations.html"
+  status = 301
+
+# Extensionless convenience URLs for the city pages, so inbound links, print,
+# and Google Business Profile references work with or without the .html suffix.
+[[redirects]]
+  from = "/kaysville"
+  to = "/kaysville-utah.html"
+  status = 301
+[[redirects]]
+  from = "/fruit-heights"
+  to = "/fruit-heights-utah.html"
+  status = 301
+[[redirects]]
+  from = "/centerville"
+  to = "/centerville-utah.html"
+  status = 301
+[[redirects]]
+  from = "/bountiful"
+  to = "/bountiful-utah.html"
+  status = 301
+[[redirects]]
+  from = "/woods-cross"
+  to = "/woods-cross-utah.html"
+  status = 301
+[[redirects]]
+  from = "/layton"
+  to = "/layton-utah.html"
+  status = 301
+[[redirects]]
+  from = "/clearfield"
+  to = "/clearfield-utah.html"
+  status = 301
+[[redirects]]
+  from = "/roy"
+  to = "/roy-utah.html"
+  status = 301
+[[redirects]]
+  from = "/riverdale"
+  to = "/riverdale-utah.html"
+  status = 301
+[[redirects]]
+  from = "/north-ogden"
+  to = "/north-ogden-utah.html"
+  status = 301
+[[redirects]]
+  from = "/farmington"
+  to = "/farmington-utah.html"
+  status = 301
+[[redirects]]
+  from = "/south-ogden"
+  to = "/ogden-utah-foot-doctor.html"
+  status = 301
+
+# NOTE: the Wix -> Netlify 301 map for the domain cutover is NOT here yet. It
+# cannot be written without crawling the live Wix site for its indexed URL set.
+# That is Phase 0, items 1-2 in SEO-AUDIT-AND-LOCAL-PLAN.md, and it must be
+# completed before DNS is pointed at Netlify.

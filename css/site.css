@@ -164,6 +164,9 @@ nav.main-nav li.has-dropdown:focus-within .dropdown-menu{
 section{padding:110px 0}
 .section-head{text-align:center;max-width:680px;margin:0 auto 64px}
 .section-head p{font-size:1.1rem;margin-top:14px}
+/* services.html leads with an H1 here rather than an H2 (it had no H1 at all).
+   Match the H2 scale so promoting the tag changed the outline, not the design. */
+.section-head h1{font-size:clamp(2rem,3.6vw,3rem)}
 
 /* ============ INTERACTIVE FOOT MODEL ============ */
 .foot-model{background:var(--sand);border-bottom:1px solid var(--line)}
@@ -480,8 +483,10 @@ footer ul a:hover{color:#ffd6a8}
 .hero-slide.is-active{opacity:1;visibility:visible;z-index:1;transition:opacity 1s ease, visibility 0s}
 .hero-slide-inner{position:relative;z-index:2;max-width:660px;padding:40px 0}
 .hero-slide .eyebrow{color:#ffd6a8}
-.hero-slide h1{color:#fff;margin-bottom:22px}
-.hero-slide h1 em{font-style:italic;color:#ffd6a8;font-weight:500}
+/* Slides 2 and 3 carry .hero-h on an <h2>: only the first slide is the page's
+   H1, but every slide has to look identical, so the visual rule covers both. */
+.hero-slide h1,.hero-slide .hero-h{color:#fff;margin-bottom:22px;font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:600}
+.hero-slide h1 em,.hero-slide .hero-h em{font-style:italic;color:#ffd6a8;font-weight:500}
 .hero-lede{font-size:1.2rem;color:rgba(255,255,255,.92);margin-bottom:32px;max-width:560px}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
 .hero-ghost{color:#fff;border-color:rgba(255,255,255,.4)}
