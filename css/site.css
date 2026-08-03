@@ -165,6 +165,26 @@ section{padding:110px 0}
 .section-head{text-align:center;max-width:680px;margin:0 auto 64px}
 .section-head p{font-size:1.1rem;margin-top:14px}
 
+/* ============ INTERACTIVE FOOT MODEL ============ */
+.foot-model{background:var(--sand);border-bottom:1px solid var(--line)}
+.foot-model .section-head{margin-bottom:40px}
+.foot-model-frame{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow);overflow:hidden;max-width:900px;margin:0 auto;
+}
+/* The embed sizes itself to the frame, so the height lives here rather than on
+   the iframe attribute — short viewports get a smaller model instead of a
+   scrollbar inside the card. */
+.foot-model-frame iframe{
+  display:block;width:100%;border:none;
+  height:clamp(420px,58vh,620px);
+}
+.foot-model-note{
+  text-align:center;margin:22px auto 0;max-width:640px;font-size:.95rem;color:var(--muted);
+}
+.foot-model-note a{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.foot-model-note a:hover{color:var(--blue-dark)}
+
 /* ============ HOW WE HELP ============ */
 /* 300px, not 240: six cards fell into a four-column grid and left two orphans
    on a second row. At 300 the grid resolves to 3 / 2 / 1 columns, all of which
