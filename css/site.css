@@ -84,7 +84,10 @@ p{color:var(--ink-soft)}
   border-bottom:1px solid var(--line);
   position:sticky;top:0;z-index:100;
 }
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:30px}
+/* padding-block, NOT the `18px 0` shorthand. This element is `container
+   header-inner`, and the shorthand reset .container's `0 28px` inline padding
+   to zero, so the logo sat flush against the left edge on mobile. */
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding-block:18px;gap:30px}
 .logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .logo img{height:58px;width:auto;flex-shrink:0}
 .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;line-height:1.1;color:var(--blue-dark)}
@@ -105,17 +108,32 @@ nav.main-nav a::after{
 }
 nav.main-nav a:hover::after{width:100%}
 .header-cta{display:flex;gap:10px;align-items:center}
-/* Patient Intake Forms is a third header button, so the row is tight. Two
-   outline buttons side by side would also read as equal-weight CTAs, which
-   they are not — Request Appointment stays the only filled button. */
-.btn-intake{white-space:nowrap}
-/* Below 1180px the logo + 7 nav items + 3 buttons stop fitting on one line.
-   Drop the intake button here rather than letting the header wrap; the
-   .nav-intake list item picks it up in the mobile drawer at 980px. Between
-   1180 and 980 it lives in the nav's overflow — acceptable, since that band is
-   narrow and the footer and in-page links still reach the page. */
-@media (max-width:1180px){
-  .header-cta .btn-intake{display:none}
+/* Patient Intake Forms lives in the TOP BAR, not the header.
+   Measured: logo 159 + nav 557 + three buttons 567 + gaps = 1343px against a
+   1240px container (1184px usable once inline padding is counted). It does not
+   fit at any viewport width, because the container is capped at 1240 — the
+   button only ever "worked" because .header-inner had no inline padding and
+   spilled into the gutters. Shortening the label and tightening every gap still
+   left it 20px short, so the row was the wrong home for it.
+   The top bar has spare room, is literally the top of the site, and is where
+   utility links belong. On mobile the .nav-intake drawer item covers it. */
+.topbar-intake{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border:1px solid rgba(255,255,255,.35);border-radius:999px;
+  white-space:nowrap;font-weight:600;
+}
+.topbar-intake:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.6)}
+/* With the intake button moved to the top bar the header needs ~1179px, which
+   just fits the 1184px usable container. Tighten the nav gap below 1300 so it
+   keeps clearing as the container shrinks. */
+@media (max-width:1300px){
+  nav.main-nav ul{gap:22px}
+}
+/* Measured at 1024: usable 968px, row needs 1189px with both buttons. Dropping
+   Pay a Bill brings it to ~919px and it clears. Request Appointment is the
+   conversion action and stays until the drawer takes over at 980. */
+@media (max-width:1250px){
+  .header-cta .btn-secondary{display:none}
 }
 /* The nav list doubles as the mobile drawer. This item is drawer-only: on
    desktop the header button already covers it, and an 8th nav item would
@@ -215,6 +233,7 @@ section{padding:110px 0}
 .help-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;
 }
+
 .help-card{
   background:var(--white);border-radius:var(--r-lg);overflow:hidden;
   box-shadow:var(--shadow-sm);transition:all .35s ease;
@@ -319,8 +338,13 @@ section{padding:110px 0}
   aspect-ratio:1;border:6px solid var(--cream);
 }
 .about-imagery .stack-2 img{width:100%;height:100%;object-fit:cover}
+/* left:-30px deliberately hangs the badge outside the image. That needs a
+   gutter to hang into, and between 980 and 1200 the container has none —
+   the badge pushed past the viewport edge. clamp() keeps the overhang on
+   wide screens and tucks it back in as the gutter disappears. */
 .about-imagery .float-stat{
-  position:absolute;top:30px;left:-30px;background:var(--white);
+  position:absolute;top:30px;left:calc(-1 * clamp(0px,(100vw - 1296px) / 2,30px));
+  background:var(--white);
   padding:22px 26px;border-radius:18px;box-shadow:var(--shadow-lg);
 }
 .float-stat strong{font-family:'Fraunces',serif;font-size:2.2rem;color:var(--blue);display:block;line-height:1}
@@ -501,7 +525,9 @@ footer ul a:hover{color:#ffd6a8}
   background:linear-gradient(100deg,var(--overlay-heavy) 0%,var(--overlay-mid) 42%,var(--overlay-light) 100%);
 }
 .hero-slide.is-active{opacity:1;visibility:visible;z-index:1;transition:opacity 1s ease, visibility 0s}
-.hero-slide-inner{position:relative;z-index:2;max-width:660px;padding:40px 0}
+/* Same trap as .header-inner: `40px 0` wiped the container's inline padding
+   and the hero headline, lede and both CTAs ran to the screen edge. */
+.hero-slide-inner{position:relative;z-index:2;max-width:660px;padding-block:40px}
 .hero-slide .eyebrow{color:#ffd6a8}
 /* Slides 2 and 3 carry .hero-h on an <h2>: only the first slide is the page's
    H1, but every slide has to look identical, so the visual rule covers both. */
@@ -854,6 +880,11 @@ footer ul a:hover{color:#ffd6a8}
   .hero-arrow.next{right:12px}
   .about-grid,.promo-grid,.contact-grid{grid-template-columns:1fr;gap:50px}
   .about-imagery{max-width:480px;margin:0 auto}
+  /* The stat badge is deliberately hung outside the image on desktop
+     (left:-30px). Once the imagery is full-bleed there is nothing to hang
+     over, so it clipped past the viewport edge. Tuck it inside. */
+  .about-imagery .float-stat{left:12px;top:12px;padding:16px 20px}
+  .float-stat strong{font-size:1.8rem}
   .detail-layout{grid-template-columns:1fr;gap:40px}
   .detail-aside{position:static;max-width:480px}
   .detail-body > .toc{margin:0 0 30px}
@@ -887,6 +918,11 @@ footer ul a:hover{color:#ffd6a8}
   nav.main-nav ul{flex-direction:column;align-items:flex-start;gap:18px}
   .menu-toggle{display:block}
   .header-cta .btn-secondary{display:none}
+  /* .nav-intake in the drawer covers this below 980.
+     Scoped to `.topbar a.topbar-intake` on purpose: the base `.topbar a` rule
+     is specificity 0-1-1 and sets display:inline-flex, so a bare
+     `.topbar-intake{display:none}` (0-1-0) lost and the link stayed visible. */
+  .topbar a.topbar-intake{display:none}
   /* Header buttons are gone at this width, so the drawer carries intake. */
   .nav-intake{display:block}
   .topbar-left{font-size:.78rem;gap:14px}
@@ -919,8 +955,53 @@ footer ul a:hover{color:#ffd6a8}
      duplicate and gives the logo the room it needs. */
   .header-cta .btn-primary{display:none}
   .logo img{height:46px}
-  .header-inner{gap:14px;padding:14px 0}
+  /* padding-block again — `14px 0` here re-broke the inline padding that
+     the base rule fixes, so the logo went back to the screen edge. */
+  .header-inner{gap:14px;padding-block:14px}
 }
+/* ============ MOBILE TOUCH & INPUT ============
+   Measured at 390px, not guessed. Everything here fixes something that was
+   actually wrong on a phone rather than restyling for its own sake. */
+@media (max-width:980px){
+  /* iOS Safari zooms the whole viewport when a focused input is under 16px.
+     These were 15.2px, so tapping any appointment field jerked the page —
+     on the site's primary conversion form. 16px is the threshold, exactly. */
+  .form-group input,.form-group select,.form-group textarea{font-size:16px}
+
+  /* Tap targets. The social icons were 14x14; 44px is the Apple HIG / WCAG
+     2.5.8 minimum. Padding rather than height so nothing reflows.
+     The two clinic phone numbers are NOT enlarged here — they are removed
+     below, because the fixed call bar already carries both. */
+  .topbar a{padding-block:11px}
+  /* The call bar is fixed to the bottom of every page at this width with
+     Farmington, South Ogden and Request. Repeating both numbers in the top bar
+     cost ~90px of the fold — a third of a phone screen above the hero — to say
+     the same thing twice. Hours and social stay. */
+  .topbar-left{display:none}
+  .topbar .container{justify-content:center}
+  .topbar-right .social a{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:44px;height:44px;margin:-11px 0;
+  }
+  .topbar-right .social{gap:4px}
+  nav.main-nav a{padding-block:11px}
+
+  /* Carousel dots were 12x12. Keep the dot the same size visually and grow the
+     hit area around it with a transparent border. */
+  .hero-dots button{
+    border:11px solid transparent;background-clip:padding-box;
+    width:34px;height:34px;
+  }
+  .hero-dots button[aria-selected="true"]{width:56px}
+  .hero-dots{gap:2px;bottom:20px}
+}
+@media (max-width:600px){
+  /* The inset clinic photo hangs outside its frame by design (right:-20px).
+     At this width that left it 8px from the screen edge — inside the viewport,
+     but visually kissing it. Pull it back in. */
+  .about-imagery .stack-2{right:0;bottom:-20px;width:52%}
+}
+
 @media (prefers-reduced-motion:reduce){
   .hero-slide{transition:opacity .01s, visibility 0s}
   /* Content must never depend on an animation to become visible. */
@@ -975,4 +1056,38 @@ footer ul a:hover{color:#ffd6a8}
 }
 @media (prefers-reduced-motion: reduce){
   .footprint{display:none}
+}
+
+/* ============ VERY SMALL SCREENS (<=380px) ============
+   Placed at the very end on purpose: these rules override base declarations
+   that appear later in the file (.svc-list, .help-grid, .container), and CSS
+   resolves equal-specificity conflicts by source order. Sitting mid-file, an
+   earlier version of this block silently lost to .svc-list below it. */
+/* 300px + 56px of container padding needs 356px, so the card overflowed
+   a 320px screen (iPhone SE). Below that the grid is single-column
+   anyway, so the minimum can simply go. */
+@media (max-width:380px){
+  .help-grid{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr}
+  /* At 320px (iPhone SE) the remaining overflow was all one of two things:
+     a long unbreakable token in a heading or link, and grid/flex children
+     refusing to shrink below their content because min-width defaults to auto. */
+  h1,h2,h3,h4,p,li,a,summary{overflow-wrap:break-word}
+  .loc-layout,.loc-card,.loc-map-wrap,.detail-layout,.detail-body,.detail-aside{min-width:0}
+  .loc-map-wrap iframe,.intake-frame iframe{max-width:100%}
+  /* 30px of card padding on top of 28px of container padding leaves only
+     ~204px for content at 320px, which the address rows overran. */
+  .aside-card{padding:20px}
+  .aside-phone{padding:12px;gap:8px;min-width:0}
+  .aside-phone div{min-width:0}
+  .aside-phone span{overflow-wrap:break-word}
+  /* .svc-list forces minmax(290px,1fr) columns and its links use a -16px
+     inline margin to widen the tap area: 290 + 32 = 322px, wider than the
+     screen. Single column and a smaller bleed at this width. */
+  .svc-list{grid-template-columns:1fr}
+  .svc-list a{overflow-wrap:break-word;word-break:break-word;margin:0 -8px;padding:14px 8px}
+  /* 28px each side is 18% of a 320px screen. Trimming to 18px returns 20px
+     of content width, which is what the last few stubborn rows needed. */
+  .container{padding:0 18px}
+  a{overflow-wrap:anywhere}
 }
