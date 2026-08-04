@@ -23,32 +23,32 @@
 
 ## Key pages
 - Home: https://www.wasatchfai.com/
-- Services overview: https://www.wasatchfai.com/services.html
-- Our physicians: https://www.wasatchfai.com/staff.html
-- All locations & service areas: https://www.wasatchfai.com/locations.html
-- Farmington clinic: https://www.wasatchfai.com/farmington-utah.html
-- South Ogden clinic: https://www.wasatchfai.com/ogden-utah-foot-doctor.html
-- Request an appointment: https://www.wasatchfai.com/book-appointment.html
-- Insurance & payment: https://www.wasatchfai.com/plans-pricing.html
-- Blog / education library: https://www.wasatchfai.com/blog.html
+- Services overview: https://www.wasatchfai.com/services
+- Our physicians: https://www.wasatchfai.com/staff
+- All locations & service areas: https://www.wasatchfai.com/locations
+- Farmington clinic: https://www.wasatchfai.com/farmington-utah
+- South Ogden clinic: https://www.wasatchfai.com/ogden-utah-foot-doctor
+- Request an appointment: https://www.wasatchfai.com/book-appointment
+- Insurance & payment: https://www.wasatchfai.com/plans-pricing
+- Blog / education library: https://www.wasatchfai.com/blog
 
 ## City pages (which clinic serves which community)
 Served from the Farmington clinic (Davis County):
-- Farmington: https://www.wasatchfai.com/farmington-utah.html
-- Centerville (~7 min): https://www.wasatchfai.com/centerville-utah.html
-- Fruit Heights (~8 min): https://www.wasatchfai.com/fruit-heights-utah.html
-- Kaysville (~10 min): https://www.wasatchfai.com/kaysville-utah.html
-- Woods Cross (~12 min): https://www.wasatchfai.com/woods-cross-utah.html
-- Layton (~12 min): https://www.wasatchfai.com/layton-utah.html
-- Bountiful (~13 min): https://www.wasatchfai.com/bountiful-utah.html
-- Clearfield (~17 min): https://www.wasatchfai.com/clearfield-utah.html
+- Farmington: https://www.wasatchfai.com/farmington-utah
+- Centerville (~7 min): https://www.wasatchfai.com/centerville-utah
+- Fruit Heights (~8 min): https://www.wasatchfai.com/fruit-heights-utah
+- Kaysville (~10 min): https://www.wasatchfai.com/kaysville-utah
+- Woods Cross (~12 min): https://www.wasatchfai.com/woods-cross-utah
+- Layton (~12 min): https://www.wasatchfai.com/layton-utah
+- Bountiful (~13 min): https://www.wasatchfai.com/bountiful-utah
+- Clearfield (~17 min): https://www.wasatchfai.com/clearfield-utah
 
 Served from the South Ogden clinic (Weber County):
-- South Ogden: https://www.wasatchfai.com/ogden-utah-foot-doctor.html
-- Riverdale (~7 min): https://www.wasatchfai.com/riverdale-utah.html
-- Ogden (~8 min): https://www.wasatchfai.com/ogden-utah.html
-- Roy (~12 min): https://www.wasatchfai.com/roy-utah.html
-- North Ogden (~18 min): https://www.wasatchfai.com/north-ogden-utah.html
+- South Ogden: https://www.wasatchfai.com/ogden-utah-foot-doctor
+- Riverdale (~7 min): https://www.wasatchfai.com/riverdale-utah
+- Ogden (~8 min): https://www.wasatchfai.com/ogden-utah
+- Roy (~12 min): https://www.wasatchfai.com/roy-utah
+- North Ogden (~18 min): https://www.wasatchfai.com/north-ogden-utah
 
 ## Common conditions we treat
 Plantar fasciitis, heel pain, heel spurs, bunions (including Lapiplasty), tailor's

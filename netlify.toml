@@ -36,7 +36,7 @@
 # Preserve the old (misspelled) live-site URL for inbound links & SEO.
 [[redirects]]
   from = "/ankle-franctures"
-  to = "/ankle-fractures.html"
+  to = "/ankle-fractures"
   status = 301
 
 # Ogden consolidation. ogden.html and ogden-utah-foot-doctor.html both targeted
@@ -46,74 +46,75 @@
 # Ogden address). ogden.html is retired.
 [[redirects]]
   from = "/ogden.html"
-  to = "/ogden-utah.html"
+  to = "/ogden-utah"
   status = 301
 
 [[redirects]]
   from = "/ogden"
-  to = "/ogden-utah.html"
+  to = "/ogden-utah"
   status = 301
 
-# The old locations entry point was the Farmington page, which made Farmington
-# the de facto index and left every other city unreachable. /locations is now
-# the hub; Farmington keeps its own URL as a clinic page.
-[[redirects]]
-  from = "/locations"
-  to = "/locations.html"
-  status = 301
+# NOTE: there is no /locations rule any more. It used to send /locations to
+# /locations.html; now that the site is extensionless the page IS /locations,
+# and the rewrite briefly turned this into /locations -> /locations, an
+# infinite redirect. Do not re-add it.
 
-# Extensionless convenience URLs for the city pages, so inbound links, print,
-# and Google Business Profile references work with or without the .html suffix.
+# Short aliases for the city pages, so inbound links, print, and Google
+# Business Profile references can use the bare city name.
 [[redirects]]
   from = "/kaysville"
-  to = "/kaysville-utah.html"
+  to = "/kaysville-utah"
   status = 301
 [[redirects]]
   from = "/fruit-heights"
-  to = "/fruit-heights-utah.html"
+  to = "/fruit-heights-utah"
   status = 301
 [[redirects]]
   from = "/centerville"
-  to = "/centerville-utah.html"
+  to = "/centerville-utah"
   status = 301
 [[redirects]]
   from = "/bountiful"
-  to = "/bountiful-utah.html"
+  to = "/bountiful-utah"
   status = 301
 [[redirects]]
   from = "/woods-cross"
-  to = "/woods-cross-utah.html"
+  to = "/woods-cross-utah"
   status = 301
 [[redirects]]
   from = "/layton"
-  to = "/layton-utah.html"
+  to = "/layton-utah"
   status = 301
 [[redirects]]
   from = "/clearfield"
-  to = "/clearfield-utah.html"
+  to = "/clearfield-utah"
   status = 301
 [[redirects]]
   from = "/roy"
-  to = "/roy-utah.html"
+  to = "/roy-utah"
   status = 301
 [[redirects]]
   from = "/riverdale"
-  to = "/riverdale-utah.html"
+  to = "/riverdale-utah"
   status = 301
 [[redirects]]
   from = "/north-ogden"
-  to = "/north-ogden-utah.html"
+  to = "/north-ogden-utah"
   status = 301
 [[redirects]]
   from = "/farmington"
-  to = "/farmington-utah.html"
+  to = "/farmington-utah"
   status = 301
 [[redirects]]
   from = "/south-ogden"
-  to = "/ogden-utah-foot-doctor.html"
+  to = "/ogden-utah-foot-doctor"
   status = 301
 
-# NOTE: the Wix -> Netlify 301 map for the domain cutover is NOT here yet. It
-# cannot be written without crawling the live Wix site for its indexed URL set.
-# That is Phase 0, items 1-2 in SEO-AUDIT-AND-LOCAL-PLAN.md, and it must be
-# completed before DNS is pointed at Netlify.
+# The bulk .html -> extensionless retirements and the remaining legacy Wix URLs
+# live in the generated `_redirects` file (see build-extensionless.py). Rules in
+# this file are evaluated before those.
+#
+# Wix URL parity was checked against the Wayback CDX index for wasatchfai.com:
+# of 167 archived Wix-era content paths, 155 already exist here and the rest are
+# either covered by rules above, Wix internals, or image-parameter fragments
+# (/post/al_c, /post/q_85) that were never pages.

@@ -75,13 +75,15 @@ def main():
         rel = f.relative_to(ROOT).as_posix()
         if rel in EXCLUDE or is_noindex(f):
             continue
+        # Extensionless URLs are canonical since build-extensionless.py ran;
+        # the .html forms 301 here, so the sitemap must list the targets.
         if rel == "index.html":
             loc, key = f"{BASE}/", ""
         elif rel.endswith("/index.html"):
             loc = f"{BASE}/{rel[:-len('index.html')]}"
             key = rel
         else:
-            loc, key = f"{BASE}/{rel}", rel
+            loc, key = f"{BASE}/{rel[:-len('.html')]}", rel
         urls.append((loc, lastmod(f), pick(CHANGEFREQ, key), pick(PRIORITY, key)))
 
     urls.sort(key=lambda u: (u[3] != "1.0", u[0]))
