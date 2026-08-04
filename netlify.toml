@@ -5,36 +5,29 @@
   publish = "."
 
 # ---------------------------------------------------------------------------
-# STAGING IS NOT PRODUCTION
+# CUTOVER COMPLETE -- 2026-08-03
 #
-# www.wasatchfai.com is still served by Wix. This repo deploys to
-# wasatchfai.netlify.app, where all 175+ pages were previously crawlable with
-# production canonicals pointing at URLs that 404 on the live domain -- a
-# staging leak and a duplicate-content risk against the eventual launch.
+# wasatchfai.com is now served by Netlify from this repo. The Wix site it
+# replaced is gone, and the site is live to the public.
 #
-# X-Robots-Tag is set GLOBALLY and deliberately.
+# The site-wide X-Robots-Tag: noindex that guarded the pre-launch staging
+# subdomain HAS BEEN REMOVED. It was deliberately fail-closed, so it followed
+# the cutover onto the production domain and was suppressing indexing of the
+# real site until it was taken out here.
 #
-# It was first written as [context.production.headers] /
-# [context.deploy-preview.headers] blocks. Those parsed without error and did
-# nothing: Netlify does NOT support context-specific headers in netlify.toml
-# (headers and redirects here are global only -- only build settings and
-# environment variables are context-aware). Verified against the live deploy --
-# the global block's nosniff and Referrer-Policy were present on the response
-# while the context block's X-Robots-Tag was absent. Do not reintroduce the
-# context form; it fails silently, which is the worst way for a noindex to fail.
-#
-# >>> AT DOMAIN CUTOVER: delete the X-Robots-Tag line below, or the real
-# >>> wasatchfai.com will launch noindexed. This fails closed by design: while
-# >>> the Netlify subdomain is the only thing serving this site, nothing here
-# >>> should be indexable.
+# Do NOT reintroduce a global noindex. If a future staging environment needs
+# one, note that Netlify does not support context-specific headers in
+# netlify.toml -- [context.production.headers] and friends parse without error
+# and are silently ignored (headers and redirects here are global; only build
+# settings and environment variables are context-aware). Use Netlify's
+# per-site "Prevent search engine indexing" setting on the staging site
+# instead, so the guard cannot ride along to production.
 # ---------------------------------------------------------------------------
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    # REMOVE AT DOMAIN CUTOVER -- see note above.
-    X-Robots-Tag = "noindex, nofollow"
 
 # ---------------------------------------------------------------------------
 # REDIRECTS
