@@ -90,6 +90,10 @@ p{color:var(--ink-soft)}
 .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;line-height:1.1;color:var(--blue-dark)}
 .logo-text span{display:block;font-size:.7rem;color:var(--sage-dark);letter-spacing:.15em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;margin-top:3px}
 nav.main-nav ul{display:flex;list-style:none;gap:30px;align-items:center}
+/* A third header button (Patient Intake Forms) tightened this row enough that
+   "Services" broke onto a second line, leaving its caret stranded. Nav items
+   never wrap; the header sheds the intake button at 1180px instead. */
+nav.main-nav li{white-space:nowrap}
 nav.main-nav a{
   font-size:.92rem;font-weight:500;color:var(--ink);position:relative;
   padding:6px 0;transition:color .2s;
@@ -101,6 +105,22 @@ nav.main-nav a::after{
 }
 nav.main-nav a:hover::after{width:100%}
 .header-cta{display:flex;gap:10px;align-items:center}
+/* Patient Intake Forms is a third header button, so the row is tight. Two
+   outline buttons side by side would also read as equal-weight CTAs, which
+   they are not — Request Appointment stays the only filled button. */
+.btn-intake{white-space:nowrap}
+/* Below 1180px the logo + 7 nav items + 3 buttons stop fitting on one line.
+   Drop the intake button here rather than letting the header wrap; the
+   .nav-intake list item picks it up in the mobile drawer at 980px. Between
+   1180 and 980 it lives in the nav's overflow — acceptable, since that band is
+   narrow and the footer and in-page links still reach the page. */
+@media (max-width:1180px){
+  .header-cta .btn-intake{display:none}
+}
+/* The nav list doubles as the mobile drawer. This item is drawer-only: on
+   desktop the header button already covers it, and an 8th nav item would
+   overflow the bar. */
+.nav-intake{display:none}
 .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
 .menu-toggle span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:transform .25s,opacity .25s}
 .menu-toggle.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -790,6 +810,42 @@ footer ul a:hover{color:#ffd6a8}
 .js-reveal .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
 .js-reveal .reveal.in{opacity:1;transform:none}
 
+/* ============ PATIENT INTAKE FORMS ============
+   Height strategy, measured rather than guessed. Jotform's resizer posts the
+   form's true document height: 7891px for the intake form and 5180px for the
+   HIPAA/billing form. Letting both expand freely would produce a ~13,000px
+   page, so each iframe is capped and scrolls internally — which is what
+   Jotform's own snippet intends with its inline max-height plus scrolling="yes".
+
+   85vh rather than 90vh so the panel never quite fills the window: a sliver of
+   page above and below keeps it obvious that the form is a panel you scroll
+   inside, not the page itself. min-height stops a short confirmation screen
+   from collapsing the card. */
+/* Deliberately NOT .reveal. These blocks carry the forms themselves, and the
+   scroll-reveal starts at opacity 0. If the IntersectionObserver misses the
+   block — which it did in testing, because Jotform's resizer grows the first
+   iframe after load and shifts the second one out from under the observer —
+   a patient is left staring at an invisible form. Same rule the reduced-motion
+   block states: content must never depend on an animation to become visible. */
+.intake-form-block{max-width:900px;margin:0 auto 56px}
+.intake-form-block:last-of-type{margin-bottom:32px}
+.intake-form-block h2{margin-bottom:8px}
+.intake-form-block > p{margin-bottom:20px;color:var(--muted)}
+.intake-frame{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);overflow:hidden;
+}
+.intake-frame iframe{
+  display:block;width:100%;border:none;
+  height:820px;min-height:520px;max-height:85vh;
+}
+.intake-fallback{
+  max-width:900px;margin:0 auto;text-align:center;
+  font-size:.95rem;color:var(--muted);
+}
+.intake-fallback a{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.intake-fallback a:hover{color:var(--blue-dark)}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width:980px){
   .hero-track{height:clamp(520px,86vh,660px)}
@@ -831,6 +887,8 @@ footer ul a:hover{color:#ffd6a8}
   nav.main-nav ul{flex-direction:column;align-items:flex-start;gap:18px}
   .menu-toggle{display:block}
   .header-cta .btn-secondary{display:none}
+  /* Header buttons are gone at this width, so the drawer carries intake. */
+  .nav-intake{display:block}
   .topbar-left{font-size:.78rem;gap:14px}
   .dropdown-menu{
     position:static;transform:none;opacity:1;visibility:visible;pointer-events:auto;
