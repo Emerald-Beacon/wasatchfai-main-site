@@ -1058,6 +1058,40 @@ footer ul a:hover{color:#ffd6a8}
   .footprint{display:none}
 }
 
+/* ============ THANK YOU ============
+   Shown after a Netlify form submission. Deliberately plain: the job is to
+   confirm receipt, set the callback expectation, and give an urgent path for
+   anyone who should not be waiting on a form. */
+.thanks-card{
+  max-width:720px;margin:0 auto;background:var(--white);
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--shadow);padding:48px;
+}
+.thanks-mark{
+  width:64px;height:64px;border-radius:999px;display:flex;
+  align-items:center;justify-content:center;
+  background:var(--sage);color:#fff;margin-bottom:22px;
+}
+.thanks-card h1{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:16px}
+.thanks-lede{font-size:1.1rem;margin-bottom:32px}
+.thanks-urgent{
+  background:var(--blue-soft);border-radius:var(--r);
+  padding:26px;margin-bottom:36px;
+}
+.thanks-urgent strong{display:block;font-size:1.05rem;margin-bottom:6px;color:var(--blue-dark)}
+.thanks-urgent p{margin-bottom:18px;font-size:.95rem}
+.thanks-phones{display:flex;gap:12px;flex-wrap:wrap}
+.thanks-card h2{font-size:1.4rem;margin-bottom:14px}
+.thanks-next{margin:0 0 28px 20px;display:grid;gap:10px}
+.thanks-next a{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.thanks-next a:hover{color:var(--orange)}
+.thanks-back a{color:var(--muted);font-weight:600}
+.thanks-back a:hover{color:var(--blue)}
+@media (max-width:600px){
+  .thanks-card{padding:28px 22px}
+  .thanks-phones .btn{width:100%;justify-content:center}
+}
+
 /* ============ VERY SMALL SCREENS (<=380px) ============
    Placed at the very end on purpose: these rules override base declarations
    that appear later in the file (.svc-list, .help-grid, .container), and CSS

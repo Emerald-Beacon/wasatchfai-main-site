@@ -93,7 +93,12 @@ def build_redirects(files):
     ]
     for f in files:
         target = pretty(f)
-        lines.append(f"/{f}".ljust(66) + f"{target}".ljust(46) + "301!")
+        # Explicit separators, NOT ljust padding. ljust(66) only pads strings
+        # SHORTER than 66 chars -- and 90 of these blog-post paths are longer,
+        # so the source ran straight into the destination and then into "301!"
+        # with no whitespace at all. Netlify silently failed to parse 90 of 192
+        # rules and those .html URLs kept serving 200 instead of redirecting.
+        lines.append(f"/{f}".ljust(64) + "  " + target.ljust(44) + "  301!")
     lines += [
         "",
         "# 2. Legacy URLs from the previous Wix site (found via the Wayback CDX",
@@ -102,7 +107,7 @@ def build_redirects(files):
     ]
     for frm, to, why in LEGACY:
         lines.append(f"# {why}")
-        lines.append(frm.ljust(66) + to.ljust(46) + "301")
+        lines.append(frm.ljust(64) + "  " + to.ljust(44) + "  301")
     return "\n".join(lines) + "\n"
 
 
@@ -129,5 +134,13 @@ if __name__ == "__main__":
         llms.write_text(new, encoding="utf-8")
         print("updated llms.txt")
 
-    (ROOT / "_redirects").write_text(build_redirects(files), encoding="utf-8")
-    print(f"wrote _redirects ({len(files)} .html retirements + {len(LEGACY)} legacy rules)")
+    redirects = build_redirects(files)
+    # Every rule must be three whitespace-separated fields. This check exists
+    # because the ljust bug above shipped and broke 90 rules unnoticed.
+    bad = [l for l in redirects.split("\n")
+           if l.strip() and not l.lstrip().startswith("#") and len(l.split()) != 3]
+    if bad:
+        raise SystemExit(f"refusing to write _redirects: {len(bad)} malformed rules, "
+                         f"first is: {bad[0]!r}")
+    (ROOT / "_redirects").write_text(redirects, encoding="utf-8")
+    print(f"wrote _redirects ({len(files)} .html retirements + {len(LEGACY)} legacy rules, all parseable)")
