@@ -68,7 +68,7 @@ OUT_OF_STATE = [
 TITLE = "Locations &amp; Service Areas | Wasatch Foot &amp; Ankle"
 DESC = ("Wasatch Foot &amp; Ankle Institute serves Davis and Weber County from clinics in "
         "Farmington and South Ogden. Find drive times, directions, and a podiatrist near you.")
-URL = "https://www.wasatchfai.com/locations.html"
+URL = "https://wasatchfai.com/locations.html"
 
 
 def cards(items):
@@ -102,7 +102,7 @@ def clinic_block(c):
 
 ALL_CITIES = [n for _, n, _ in DAVIS + WEBER]
 item_list = ",\n".join(
-    f'        {{ "@type": "ListItem", "position": {i}, "url": "https://www.wasatchfai.com/{h}", "name": {json.dumps(re.sub("&[a-z]+;", "", n))} }}'
+    f'        {{ "@type": "ListItem", "position": {i}, "url": "https://wasatchfai.com/{h}", "name": {json.dumps(re.sub("&[a-z]+;", "", n))} }}'
     for i, (h, n, _) in enumerate(DAVIS + WEBER, 1))
 
 PAGE = f"""<!DOCTYPE html>
@@ -121,11 +121,11 @@ PAGE = f"""<!DOCTYPE html>
 <meta property="og:title" content="{TITLE}">
 <meta property="og:description" content="{DESC}">
 <meta property="og:url" content="{URL}">
-<meta property="og:image" content="https://www.wasatchfai.com/images/hero-mountain-biking.jpg">
+<meta property="og:image" content="https://wasatchfai.com/images/hero-mountain-biking.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{TITLE}">
 <meta name="twitter:description" content="{DESC}">
-<meta name="twitter:image" content="https://www.wasatchfai.com/images/hero-mountain-biking.jpg">
+<meta name="twitter:image" content="https://wasatchfai.com/images/hero-mountain-biking.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -238,7 +238,7 @@ PAGE = f"""<!DOCTYPE html>
       "@type": "BreadcrumbList",
       "@id": "{URL}#breadcrumb",
       "itemListElement": [
-        {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.wasatchfai.com/" }},
+        {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wasatchfai.com/" }},
         {{ "@type": "ListItem", "position": 2, "name": "Locations", "item": "{URL}" }}
       ]
     }},
@@ -249,8 +249,8 @@ PAGE = f"""<!DOCTYPE html>
       "name": "Locations & Service Areas",
       "description": "Wasatch Foot & Ankle Institute serves Davis and Weber County from clinics in Farmington and South Ogden.",
       "inLanguage": "en-US",
-      "isPartOf": {{ "@id": "https://www.wasatchfai.com/#website" }},
-      "about": {{ "@id": "https://www.wasatchfai.com/#clinic" }},
+      "isPartOf": {{ "@id": "https://wasatchfai.com/#website" }},
+      "about": {{ "@id": "https://wasatchfai.com/#clinic" }},
       "mainEntity": {{ "@id": "{URL}#arealist" }}
     }},
     {{

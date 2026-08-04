@@ -4,7 +4,7 @@ Inject the two structured-data blocks the audit found missing:
 
   index.html  -- had NO JSON-LD at all. The homepage is the anchor of the
                  entity graph: 830 nodes across the site reference
-                 https://www.wasatchfai.com/#clinic, and nothing defined it.
+                 https://wasatchfai.com/#clinic, and nothing defined it.
   staff.html  -- had NO JSON-LD, and the site had no Person/Physician entity
                  anywhere. All 123 blog posts credit an organisation as author,
                  which is the single largest E-E-A-T liability on a YMYL
@@ -21,7 +21,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).parent
-BASE = "https://www.wasatchfai.com"
+BASE = "https://wasatchfai.com"
 MARK_OPEN = "<!-- JSON-LD: managed by build-core-schema.py -->"
 MARK_CLOSE = "<!-- /JSON-LD -->"
 
@@ -33,6 +33,7 @@ PHYSICIANS = [
                   "Ankle arthroscopy", "Wound care"],
         # AACFAS = Associate, American College of Foot and Ankle Surgeons
         "college": "Associate of the American College of Foot and Ankle Surgeons",
+        "npi": "1700193711",
     },
     {
         "id": "dr-frost", "name": "Colby Frost",
@@ -40,6 +41,7 @@ PHYSICIANS = [
         "focus": ["Complex foot and ankle reconstruction", "Limb salvage",
                   "Pediatric foot deformities"],
         "college": "Fellow of the American College of Foot and Ankle Surgeons",
+        "npi": "1619284627",
     },
     {
         "id": "dr-woolley", "name": "Mark Woolley",
@@ -47,12 +49,14 @@ PHYSICIANS = [
         "focus": ["Lower-extremity nerve surgery", "Minimally invasive surgery",
                   "Sports medicine"],
         "college": "Fellow of the American College of Foot and Ankle Surgeons",
+        "npi": "1629213780",
     },
     {
         "id": "dr-murrah", "name": "Chantel Murrah",
         "creds": "DPM, MHA, MPH, MBA, PhD",
         "focus": ["Non-surgical foot and ankle care", "Diabetic foot care"],
         "college": None,
+        "npi": "1093791311",
         "languages": ["English", "Spanish"],
     },
 ]
@@ -75,9 +79,23 @@ def physician_node(p):
     if p.get("languages"):
         langs = ',\n      "knowsLanguage": [' + ", ".join(f'"{l}"' for l in p["languages"]) + "]"
     focus = ", ".join(f'"{f}"' for f in p["focus"])
+    # sameAs is the audit's single highest-leverage item. Only the CMS NPI
+    # registry is included: it is a deterministic, verifiable URL keyed to a
+    # number the audit retrieved from the federal API. Directory and social
+    # profiles (Google, Yelp, Healthgrades, Birdeye, Facebook, Instagram) are
+    # deliberately NOT guessed -- a sameAs pointing at the wrong profile is
+    # worse than none, and this practice already has four name collisions.
+    npi = ""
+    if p.get("npi"):
+        npi = (',\n      "identifier": {\n'
+               '        "@type": "PropertyValue",\n'
+               '        "propertyID": "NPI",\n'
+               f'        "value": "{p["npi"]}"\n'
+               '      },\n'
+               f'      "sameAs": ["https://npiregistry.cms.hhs.gov/provider-view/{p["npi"]}"]')
     return f"""    {{
       "@type": "Person",
-      "@id": "{BASE}/staff.html#{p['id']}",
+      "@id": "{BASE}/staff#{p['id']}",
       "name": "{p['name']}, {p['creds']}",
       "givenName": "{p['name'].split()[0]}",
       "familyName": "{p['name'].split()[-1]}",
@@ -90,7 +108,7 @@ def physician_node(p):
         "occupationalCategory": "29-1081.00"
       }},
       "worksFor": {{ "@id": "{BASE}/#clinic" }},
-      "url": "{BASE}/staff.html#{p['id']}",
+      "url": "{BASE}/staff#{p['id']}",
       "alumniOf": [
         {{ "@type": "CollegeOrUniversity", "name": "Weber State University" }},
         {{ "@type": "CollegeOrUniversity", "name": "Des Moines University" }}
@@ -98,18 +116,21 @@ def physician_node(p):
       "hasCredential": [
 {chr(10).join('        ' + c + (',' if i < len(creds) - 1 else '') for i, c in enumerate(creds))}
       ],
-      "knowsAbout": [{focus}]{langs}
+      "knowsAbout": [{focus}]{langs}{npi}
     }}"""
 
 
 EMPLOYEE_REFS = ",\n".join(
-    f'        {{ "@id": "{BASE}/staff.html#{p["id"]}" }}' for p in PHYSICIANS)
+    f'        {{ "@id": "{BASE}/staff#{p["id"]}" }}' for p in PHYSICIANS)
 
+# NOTE: no alternateName. The AI-visibility audit flagged "Wasatch FAI" as
+# actively harmful -- FAI is the standard abbreviation for femoroacetabular
+# impingement (a hip condition) and for Foot & Ankle International, the AOFAS
+# journal. Declaring it trained machines on the practice's most ambiguous token.
 CLINIC_CORE = f"""    {{
       "@type": ["MedicalClinic", "MedicalBusiness"],
       "@id": "{BASE}/#clinic",
       "name": "Wasatch Foot & Ankle Institute",
-      "alternateName": "Wasatch FAI",
       "url": "{BASE}/",
       "logo": "{BASE}/images/logo-full.png",
       "image": "{BASE}/images/logo-full.png",
@@ -117,7 +138,10 @@ CLINIC_CORE = f"""    {{
       "medicalSpecialty": "Podiatric",
       "priceRange": "$$",
       "currenciesAccepted": "USD",
-      "paymentAccepted": "Cash, Check, Credit Card, Insurance",
+      "availableLanguage": ["English", "Spanish"],
+      "identifier": {{ "@type": "PropertyValue", "propertyID": "NPI", "value": "1225377930" }},
+      "sameAs": ["https://npiregistry.cms.hhs.gov/provider-view/1225377930"],
+      "paymentAccepted": "Cash, Check, Credit Card, SelectHealth, PEHP, DMBA, Medicare, Medicaid, United Healthcare, Blue Cross Blue Shield, Aetna, Tricare",
       "description": "Board-certified podiatry and foot & ankle care serving Northern Utah from clinics in Farmington and South Ogden.",
       "areaServed": [
         {{ "@type": "AdministrativeArea", "name": "Davis County, Utah" }},
@@ -127,8 +151,8 @@ CLINIC_CORE = f"""    {{
 {EMPLOYEE_REFS}
       ],
       "department": [
-        {{ "@id": "{BASE}/farmington-utah.html#clinic" }},
-        {{ "@id": "{BASE}/ogden-utah-foot-doctor.html#clinic" }}
+        {{ "@id": "{BASE}/farmington-utah#clinic" }},
+        {{ "@id": "{BASE}/ogden-utah-foot-doctor#clinic" }}
       ],
       "openingHoursSpecification": [
         {{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "08:00", "closes": "17:00" }},
@@ -138,9 +162,9 @@ CLINIC_CORE = f"""    {{
 
 FARMINGTON_NODE = f"""    {{
       "@type": "MedicalClinic",
-      "@id": "{BASE}/farmington-utah.html#clinic",
+      "@id": "{BASE}/farmington-utah#clinic",
       "name": "Wasatch Foot & Ankle Institute — Farmington",
-      "url": "{BASE}/farmington-utah.html",
+      "url": "{BASE}/farmington-utah",
       "telephone": "+1-801-451-7500",
       "faxNumber": "+1-801-451-6966",
       "email": "contactus@wasatchfai.com",
@@ -165,9 +189,9 @@ FARMINGTON_NODE = f"""    {{
 
 OGDEN_NODE = f"""    {{
       "@type": "MedicalClinic",
-      "@id": "{BASE}/ogden-utah-foot-doctor.html#clinic",
+      "@id": "{BASE}/ogden-utah-foot-doctor#clinic",
       "name": "Wasatch Foot & Ankle Institute — South Ogden",
-      "url": "{BASE}/ogden-utah-foot-doctor.html",
+      "url": "{BASE}/ogden-utah-foot-doctor",
       "telephone": "+1-801-627-2122",
       "faxNumber": "+1-801-627-2125",
       "email": "contactus@wasatchfai.com",
@@ -230,16 +254,16 @@ STAFF_GRAPH = f"""{MARK_OPEN}
   "@graph": [
     {{
       "@type": "BreadcrumbList",
-      "@id": "{BASE}/staff.html#breadcrumb",
+      "@id": "{BASE}/staff#breadcrumb",
       "itemListElement": [
         {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "{BASE}/" }},
-        {{ "@type": "ListItem", "position": 2, "name": "Our Physicians", "item": "{BASE}/staff.html" }}
+        {{ "@type": "ListItem", "position": 2, "name": "Our Physicians", "item": "{BASE}/staff" }}
       ]
     }},
     {{
       "@type": "AboutPage",
-      "@id": "{BASE}/staff.html#webpage",
-      "url": "{BASE}/staff.html",
+      "@id": "{BASE}/staff#webpage",
+      "url": "{BASE}/staff",
       "name": "Our Physicians | Wasatch Foot & Ankle Institute",
       "inLanguage": "en-US",
       "isPartOf": {{ "@id": "{BASE}/#website" }},

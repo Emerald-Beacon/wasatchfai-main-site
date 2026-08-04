@@ -25,7 +25,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).parent
-BASE = "https://www.wasatchfai.com"
+BASE = "https://wasatchfai.com"
 
 # --------------------------------------------------------------- inventory ---
 def pages():

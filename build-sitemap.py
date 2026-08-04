@@ -16,7 +16,7 @@ import subprocess
 import datetime
 
 ROOT = pathlib.Path(__file__).parent
-BASE = "https://www.wasatchfai.com"
+BASE = "https://wasatchfai.com"
 
 # Priority tiers. These are hints, not commands -- kept coarse on purpose.
 PRIORITY = [

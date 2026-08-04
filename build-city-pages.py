@@ -299,9 +299,10 @@ def build(c):
     cl = CLINICS[c["clinic"]]
     other = CLINICS["ogden" if c["clinic"] == "farmington" else "farmington"]
     city, slug = c["city"], c["slug"]
-    url = f"https://www.wasatchfai.com/{slug}.html"
+    url = f"https://wasatchfai.com/{slug}.html"
 
-    title = f"{city} Podiatrist &amp; Foot Doctor | Wasatch FAI"
+    # Brand spelled out, not "Wasatch FAI" -- see build-core-schema.py note.
+    title = f"{city} Podiatrist &amp; Foot Doctor | Wasatch Foot &amp; Ankle"
     desc = (f"Foot &amp; ankle care for {city}, UT. Our {cl['name']} clinic is {c['drive']} away. "
             f"Same-day appointments, most insurance accepted. Call {cl['phone']}.")
 
@@ -350,11 +351,11 @@ def build(c):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="https://www.wasatchfai.com/images/hero-mountain-biking.jpg">
+<meta property="og:image" content="https://wasatchfai.com/images/hero-mountain-biking.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="https://www.wasatchfai.com/images/hero-mountain-biking.jpg">
+<meta name="twitter:image" content="https://wasatchfai.com/images/hero-mountain-biking.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -562,8 +563,8 @@ def build(c):
       "@type": "BreadcrumbList",
       "@id": "{url}#breadcrumb",
       "itemListElement": [
-        {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.wasatchfai.com/" }},
-        {{ "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://www.wasatchfai.com/locations.html" }},
+        {{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wasatchfai.com/" }},
+        {{ "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://wasatchfai.com/locations.html" }},
         {{ "@type": "ListItem", "position": 3, "name": {js(city)}, "item": "{url}" }}
       ]
     }},
@@ -581,23 +582,23 @@ def build(c):
       "name": {js(plain(title))},
       "description": {js(plain(desc))},
       "inLanguage": "en-US",
-      "isPartOf": {{ "@id": "https://www.wasatchfai.com/#website" }},
+      "isPartOf": {{ "@id": "https://wasatchfai.com/#website" }},
       "about": {{ "@id": "{url}#clinic" }},
-      "reviewedBy": {{ "@id": "https://www.wasatchfai.com/#clinic" }},
+      "reviewedBy": {{ "@id": "https://wasatchfai.com/#clinic" }},
       "specialty": "Podiatric"
     }},
     {{
       "@type": "MedicalClinic",
       "@id": "{url}#clinic",
       "name": "Wasatch Foot & Ankle Institute — {cl['name']}",
-      "url": "https://www.wasatchfai.com/{cl['page']}",
-      "logo": "https://www.wasatchfai.com/images/logo-full.png",
-      "image": "https://www.wasatchfai.com/images/logo-full.png",
+      "url": "https://wasatchfai.com/{cl['page']}",
+      "logo": "https://wasatchfai.com/images/logo-full.png",
+      "image": "https://wasatchfai.com/images/logo-full.png",
       "telephone": "{cl['e164']}",
       "email": "contactus@wasatchfai.com",
       "medicalSpecialty": "Podiatric",
       "priceRange": "$$",
-      "parentOrganization": {{ "@id": "https://www.wasatchfai.com/#clinic" }},
+      "parentOrganization": {{ "@id": "https://wasatchfai.com/#clinic" }},
       "address": {{
         "@type": "PostalAddress",
         "streetAddress": "{cl['street']}",
