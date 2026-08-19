@@ -69,6 +69,48 @@ def rewrite_html(text):
 
 
 # ---------------------------------------------------------------- redirects --
+# Posts retired by consolidation or renamed. Their URLs are indexed, so they
+# must keep 301ing to whatever replaced them -- forever. _redirects is fully
+# regenerated from disk on every run, so a rule added by hand there would be
+# silently wiped; it has to live here.
+#
+# Format: (old path, target path, why)
+RETIRED = [
+    ("/post/what-to-know-about-bunion-surgery-in-2025",
+     "/post/what-to-know-about-bunion-surgery",
+     "the year was baked into the slug and went stale"),
+    ("/post/how-to-fix-ankle-instability-for-good",
+     "/post/chronic-ankle-instability-treatment-and-exercises",
+     "consolidated: duplicate of the CAI treatment post"),
+    ("/post/is-your-ankle-instability-holding-you-back-signs-symptoms-and-solutions",
+     "/post/what-is-chronic-ankle-instability-cai",
+     "consolidated: duplicate of the CAI explainer"),
+    ("/post/why-your-chronic-ankle-instability-keeps-coming-back",
+     "/post/why-does-chronic-ankle-instability-return",
+     "consolidated: same question as why-does-...-return"),
+    ("/post/toenail-fungus-removal",
+     "/post/toe-nail-fungus-removal-options",
+     "consolidated: subsumed by the treatment-options post"),
+    ("/post/treating-toenail-fungus-and-ingrown-nails",
+     "/post/toe-nail-fungus-removal-options",
+     "consolidated: split-topic post duplicating both clusters"),
+    ("/post/ingrown-nail-care-guide-daily-habits-treatments-and-prevention",
+     "/post/long-term-ingrown-toenail-prevention-and-home-treatment",
+     "consolidated: duplicate of the long-term prevention post"),
+    ("/post/what-are-the-cause-s-of-ingrown-toenails-how-do-you-fix-them",
+     "/post/long-term-ingrown-toenail-prevention-and-home-treatment",
+     "consolidated: procedure section merged into the survivor"),
+    ("/post/hammer-toe-effective-treatment-options",
+     "/post/advanced-hammertoe-treatment-options",
+     "consolidated: superseded by advanced-hammertoe-treatment-options"),
+    ("/post/have-hammertoes-your-guide-to-what-they-are-prevention-and-treatment-options",
+     "/post/advanced-hammertoe-treatment-options",
+     "consolidated: superseded by advanced-hammertoe-treatment-options"),
+    ("/post/what-is-a-dual-syndesmosis-tightrope-and-how-does-it-improve-recovery",
+     "/post/understanding-the-dual-syndesmosis-tightrope-a-modern-fixation-option",
+     "consolidated: near-identical to the other TightRope post"),
+]
+
 LEGACY = [
     # Wix-era URLs found in the Wayback archive that have no direct equivalent.
     ("/heal-pain", "/heel-pain", "the old site shipped this typo of heel-pain"),
@@ -101,7 +143,16 @@ def build_redirects(files):
         lines.append(f"/{f}".ljust(64) + "  " + target.ljust(44) + "  301!")
     lines += [
         "",
-        "# 2. Legacy URLs from the previous Wix site (found via the Wayback CDX",
+        "# 2. Posts retired by consolidation or renamed. These URLs were indexed",
+        "#    and may still carry links, so the redirects are permanent.",
+        "",
+    ]
+    for frm, to, why in RETIRED:
+        lines.append(f"# {why}")
+        lines.append(frm.ljust(64) + "  " + to.ljust(44) + "  301")
+    lines += [
+        "",
+        "# 3. Legacy URLs from the previous Wix site (found via the Wayback CDX",
         "#    index). These have no direct equivalent in the new structure.",
         "",
     ]
@@ -143,4 +194,5 @@ if __name__ == "__main__":
         raise SystemExit(f"refusing to write _redirects: {len(bad)} malformed rules, "
                          f"first is: {bad[0]!r}")
     (ROOT / "_redirects").write_text(redirects, encoding="utf-8")
-    print(f"wrote _redirects ({len(files)} .html retirements + {len(LEGACY)} legacy rules, all parseable)")
+    print(f"wrote _redirects ({len(files)} .html retirements + {len(RETIRED)} retired posts "
+          f"+ {len(LEGACY)} legacy rules, all parseable)")

@@ -59,7 +59,7 @@ for prioritization. Ranked instead by **real publish age × commercial intent**.
 
 | Post | Published | Age | Priority | Why |
 |---|---|---:|---|---|
-| `what-to-know-about-bunion-surgery-in-2025` | 2025-01-xx | ~19mo | **Critical** | **Stale year in the title and URL.** Reads as outdated to both humans and AI |
+| ~~`what-to-know-about-bunion-surgery-in-2025`~~ | 2025-11-06 | — | ~~Critical~~ **Fixed 2026-08-19** | Renamed to `/post/what-to-know-about-bunion-surgery`, old URL 301'd |
 | `what-you-need-to-know-about-plantar-fasciitis` | 2019-06-13 | 7yr | **Critical** | Highest-intent topic on the site; oldest treatment info |
 | `sprained-ankle-here-s-when-you-need-a-doctor` | 2019-03-19 | 7yr | High | Urgent-intent query, heavy search volume |
 | `heel-spur-treatment-options` | 2021-01-01 | 5.6yr | High | Treatment options have moved on |
@@ -67,32 +67,27 @@ for prioritization. Ranked instead by **real publish age × commercial intent**.
 | `foot-pain-101-identifying-the-root-causes-and-finding-relief` | 2020-02-18 | 6.5yr | Medium | Broad top-of-funnel entry point |
 | `general-foot-care-tips-to-save-on-pedicures` | 2018-11-05 | 7.8yr | Low | Oldest post, but thin commercial value |
 
-⚠️ **`what-to-know-about-bunion-surgery-in-2025` is routed to a human.** Fixing it
-properly means dropping the year from the title *and* the slug, which needs a 301
-in `_redirects`. The routine is not permitted to rename or delete existing posts.
+✅ **Fixed 2026-08-19.** The year was dropped from both the title and the slug, and
+`/post/what-to-know-about-bunion-surgery-in-2025` now 301s to the new URL. Its real
+`datePublished` (2025-11-06) was left alone — only `dateModified` moved to today,
+because that is when it was actually edited.
 
 ---
 
-## Cannibalization warning (human decision, not the routine's)
+## Cannibalization — RESOLVED 2026-08-19
 
-These overlapping sets should be consolidated before the cluster grows further.
-**The routine will not touch them** — flagged here for you:
+These overlapping sets have been consolidated: 10 posts retired into 7 survivors,
+every old URL 301'd, unique content merged first. The library went 124 → 114.
+Full mapping in `AUTONOMOUS-PUBLISHING-RUNBOOK.md`.
 
-- **Chronic ankle instability ×8** — `what-is-chronic-ankle-instability-cai`,
-  `why-does-chronic-ankle-instability-return`,
-  `why-your-chronic-ankle-instability-keeps-coming-back`,
-  `how-to-fix-ankle-instability-for-good`,
-  `is-your-ankle-instability-holding-you-back-…`,
-  `preventing-ankle-instability-…`, `chronic-ankle-instability-treatment-and-exercises`,
-  `an-inside-look-lateral-ankle-instability`
-- **Toenail fungus ×4** — `toenail-fungus-removal`, `toe-nail-fungus-removal-options`,
-  `toenail-fungus-treatment-updates`, `treating-toenail-fungus-and-ingrown-nails`
-- **Ingrown toenails ×4** — `ingrown-nail-care-guide-…`,
-  `long-term-ingrown-toenail-prevention-…`, `what-are-the-cause-s-of-ingrown-toenails-…`,
-  `when-to-seek-treatment-for-an-ingrown-toenail`
-- **Hammertoe ×3** — `advanced-hammertoe-treatment-options`,
-  `hammer-toe-effective-treatment-options`, `have-hammertoes-your-guide-…`
-- **Dual Syndesmosis TightRope ×2**, **Kids' flat feet / foot problems ×2**
+- ~~Chronic ankle instability ×8~~ → 3 retired, 5 kept (distinct angles: definition,
+  why-it-returns, treatment/exercises, instability→foot-pain, prevention)
+- ~~Toenail fungus ×4~~ → 2 retired, 2 kept (treatment options, combination therapy)
+- ~~Ingrown toenails ×4~~ → 2 retired, 2 kept (long-term prevention + when-to-seek);
+  the nail-removal procedure section was merged into the survivor
+- ~~Hammertoe ×3~~ → 2 retired, 1 kept
+- ~~Dual Syndesmosis TightRope ×2~~ → 1 retired, 1 kept
+- Kids' flat feet / foot problems ×2 — left alone; genuinely different angles
 
 ---
 
@@ -225,5 +220,6 @@ Not automated in this quarter. Site has no `rss.xml` — see the runbook's
 - [ ] Achilles/Sports 6 → 12, Bunions 6 → 12, Diabetic 6 → 11
 - [ ] Refresh the 5 highest-decay high-intent posts
 - [ ] No new posts in the two saturated clusters
-- [ ] Human tasks: retitle `…-bunion-surgery-in-2025`, consolidate the
-      ankle-instability and toenail-fungus duplicate sets, decide on `rss.xml`
+- [x] ~~Retitle `…-bunion-surgery-in-2025`~~ — done 2026-08-19
+- [x] ~~Consolidate the duplicate sets~~ — done 2026-08-19, 124 → 114 posts
+- [ ] Decide on `rss.xml` — still the one open item

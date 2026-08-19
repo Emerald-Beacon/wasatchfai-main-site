@@ -80,7 +80,7 @@ Dates are the calendar's intent, not a hard binding — the queue is positional.
 | 18 | `eccentric-heel-drops-for-achilles-tendonitis` | Eccentric Heel Drops: The Exercise That Works for Achilles Tendonitis | Achilles Tendon & Sports Injuries | tutorial | eccentric heel drops achilles |
 | 19 | `recovering-from-lapiplasty-week-by-week` | Recovering From Lapiplasty, Week by Week | Bunions & Toe Deformities | how-to-guide | lapiplasty recovery timeline |
 | 20 | `big-toe-arthritis-treatment-options-beyond-fusion` | Big-Toe Arthritis: Treatment Options Beyond Fusion | Arthritis, Nerve & Circulation | how-to-guide | big toe arthritis treatment |
-| 21 | `REFRESH` | → `post/toenail-fungus-removal.html` | Nails & Skin Conditions | refresh | toenail fungus removal |
+| 21 | `REFRESH` | → `post/toe-nail-fungus-removal-options.html` | Nails & Skin Conditions | refresh | toenail fungus removal |
 | 22 | `diabetic-foot-ulcers-stages-and-treatment` | Diabetic Foot Ulcers: Stages, Treatment, and Why Speed Matters | Diabetic Foot Care | how-to-guide | diabetic foot ulcer treatment |
 | 23 | `why-diabetic-neuropathy-hides-foot-injuries` | Why Diabetic Neuropathy Hides Foot Injuries | Diabetic Foot Care | faq-knowledge | diabetic neuropathy foot injury |
 | 24 | `charcot-foot-what-diabetics-should-know` | Charcot Foot: What People With Diabetes Should Know | Diabetic Foot Care | how-to-guide | charcot foot diabetes |
@@ -169,10 +169,41 @@ This does **not** clean up the existing duplicates. That's still a human job —
 
 - **Pricing, insurance, and financing content** — rule 1 makes it unwritable.
 - **Anything naming a specific patient case or outcome** — no verifiable source.
-- **`what-to-know-about-bunion-surgery-in-2025`** — the stale year is in the *slug*,
-  so fixing it properly needs a rename plus a 301 in `_redirects`. Rule 7 forbids it.
-- **Cannibalization cleanup** — the 8 near-duplicate ankle-instability posts and the
-  4 toenail-fungus posts need consolidating and redirecting. Human job.
+- ~~`what-to-know-about-bunion-surgery-in-2025`~~ — **done 2026-08-19.** Renamed to
+  `/post/what-to-know-about-bunion-surgery`, title de-yeared, old URL 301'd.
+- ~~Cannibalization cleanup~~ — **done 2026-08-19.** See *Consolidation* below.
+
+## Consolidation — done 2026-08-19
+
+The blog carried five sets of near-duplicate posts competing with each other.
+Ten were retired into seven survivors; the library went **124 → 114**. Unique
+material was merged into the survivor first, and every retired URL 301s
+permanently (registered in `build-extensionless.py`'s `RETIRED` list, because
+`_redirects` is regenerated from disk and a hand-added rule there would be wiped).
+
+| Retired | Redirects to |
+|---|---|
+| `how-to-fix-ankle-instability-for-good` | `chronic-ankle-instability-treatment-and-exercises` |
+| `is-your-ankle-instability-holding-you-back-…` | `what-is-chronic-ankle-instability-cai` |
+| `why-your-chronic-ankle-instability-keeps-coming-back` | `why-does-chronic-ankle-instability-return` |
+| `toenail-fungus-removal` | `toe-nail-fungus-removal-options` |
+| `treating-toenail-fungus-and-ingrown-nails` | `toe-nail-fungus-removal-options` |
+| `ingrown-nail-care-guide-…` | `long-term-ingrown-toenail-prevention-and-home-treatment` |
+| `what-are-the-cause-s-of-ingrown-toenails-…` | `long-term-ingrown-toenail-prevention-and-home-treatment` |
+| `hammer-toe-effective-treatment-options` | `advanced-hammertoe-treatment-options` |
+| `have-hammertoes-your-guide-…` | `advanced-hammertoe-treatment-options` |
+| `what-is-a-dual-syndesmosis-tightrope-…` | `understanding-the-dual-syndesmosis-tightrope-…` |
+
+Content merged rather than dropped: the **partial/complete nail removal procedure**
+section moved into the ingrown-toenail survivor, which had no procedure detail.
+The hammertoe survivor already covered flexible vs. rigid and the ankle survivor
+already covered bracing and footwear, so those needed no merge.
+
+Cluster counts after: Ankle 16→13, Nails & Skin 12→8, Bunions & Toe 6→4,
+Surgery & Recovery 12→11.
+
+⚠️ Queue item 21 originally refreshed `toenail-fungus-removal`, now retired. It
+points at `toe-nail-fungus-removal-options` instead.
 
 ---
 
