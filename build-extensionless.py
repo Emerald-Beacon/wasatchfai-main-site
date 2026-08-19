@@ -31,6 +31,7 @@ BASE = "https://wasatchfai.com"
 def pages():
     out = []
     for f in sorted(glob.glob("*.html")) + sorted(glob.glob("post/*.html")) \
+            + sorted(glob.glob("es/*.html")) \
             + sorted(glob.glob("heel-pain-procedure/*.html")):
         out.append(f)
     return out

@@ -1125,3 +1125,20 @@ footer ul a:hover{color:#ffd6a8}
   .container{padding:0 18px}
   a{overflow-wrap:anywhere}
 }
+
+/* ---------------------------------------------------------------------------
+   Language switch (topbar). Sits first in the top bar on every page so the
+   Spanish site is reachable from anywhere, not just the home page.
+   --------------------------------------------------------------------------- */
+.lang-switch{display:inline-flex;align-items:center;gap:0;border:1px solid rgba(255,255,255,.28);
+  border-radius:999px;overflow:hidden;line-height:1;flex-shrink:0}
+.lang-switch span,.lang-switch a{
+  font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:4px 9px;text-decoration:none;
+  color:rgba(255,255,255,.82);transition:background .15s ease,color .15s ease}
+.lang-switch .lang-cur{background:rgba(255,255,255,.9);color:var(--blue-dark)}
+.lang-switch a:hover,.lang-switch a:focus-visible{background:rgba(255,255,255,.18);color:#fff}
+.lang-switch a:focus-visible{outline:2px solid #fff;outline-offset:1px}
+@media(max-width:640px){
+  .topbar-right .lang-switch{order:-1}
+  .lang-switch span,.lang-switch a{padding:4px 8px;font-size:.7rem}
+}

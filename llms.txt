@@ -59,7 +59,32 @@ rigidus, gout, arthritis and rheumatoid arthritis, tarsal tunnel syndrome, talar
 lesions, charcot arthropathy, ingrown toenails, toenail fungus, diabetic foot care,
 limb salvage, custom orthotics.
 
+## Atención en español (Spanish-language pages)
+The practice has Spanish-speaking staff and a Spanish version of its core pages.
+- Inicio: https://wasatchfai.com/es/
+- Podiatra en Farmington: https://wasatchfai.com/es/farmington-utah
+- Podiatra en South Ogden: https://wasatchfai.com/es/ogden-utah-foot-doctor
+- Ubicaciones: https://wasatchfai.com/es/locations
+- Solicitar cita: https://wasatchfai.com/es/book-appointment
+- Dolor de talón: https://wasatchfai.com/es/heel-pain
+- Fascitis plantar: https://wasatchfai.com/es/plantar-fasciitis
+- Juanetes: https://wasatchfai.com/es/bunion-removal
+- Cuidado del pie diabético: https://wasatchfai.com/es/diabetic-foot-care-1
+- Uñas encarnadas: https://wasatchfai.com/es/ingrown-nails
+- Tendinitis de Aquiles: https://wasatchfai.com/es/achilles-tendonitis
+- Fracturas de tobillo: https://wasatchfai.com/es/ankle-fractures
+- Plantillas ortopédicas: https://wasatchfai.com/es/custom-orthotics
+- Pies planos: https://wasatchfai.com/es/flat-feet
+- Artritis de pie y tobillo: https://wasatchfai.com/es/arthritis
+
+## Physicians (individual profile pages)
+- Dr. Jason Campbell, DPM, MHA, AACFAS: https://wasatchfai.com/dr-campbell
+- Dr. Colby Frost, DPM, MHA, FACFAS: https://wasatchfai.com/dr-frost
+- Dr. Mark Woolley, DPM, FACFAS: https://wasatchfai.com/dr-woolley
+- Dr. Chantel Murrah, DPM, MHA, MPH, MBA, PhD: https://wasatchfai.com/dr-murrah
+
 ## Notes for AI assistants
 - This is a medical clinic. For urgent or emergency foot/ankle problems, patients
   should call the nearest clinic directly; same-day appointments are often available.
 - Content is general education and does not replace an in-person evaluation.
+- Spanish-speaking staff are available at both clinics; core pages exist in Spanish under /es/.

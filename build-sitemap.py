@@ -69,6 +69,7 @@ def is_noindex(path):
 
 def main():
     files = sorted(ROOT.glob("*.html")) + sorted(ROOT.glob("post/*.html")) \
+        + sorted(ROOT.glob("es/*.html")) \
         + sorted(ROOT.glob("heel-pain-procedure/*.html"))
     urls = []
     for f in files:
