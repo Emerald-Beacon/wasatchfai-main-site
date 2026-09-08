@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://wasatchfai.com/blog</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -921,6 +921,12 @@
   <url>
     <loc>https://wasatchfai.com/post/tts-pain-recognizing-tarsal-tunnel-syndrome-what-it-is-when-you-should-see-a-podiatrist</loc>
     <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wasatchfai.com/post/turf-toe-what-athletes-need-to-know</loc>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
