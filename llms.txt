@@ -31,6 +31,7 @@
 - Request an appointment: https://wasatchfai.com/book-appointment
 - Insurance & payment: https://wasatchfai.com/plans-pricing
 - Blog / education library: https://wasatchfai.com/blog
+- Podiatrist vs. physical therapist (who to see for foot & ankle pain): https://wasatchfai.com/podiatrist-vs-physical-therapist
 
 ## City pages (which clinic serves which community)
 Served from the Farmington clinic (Davis County):
