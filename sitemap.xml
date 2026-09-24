@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://wasatchfai.com/blog</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -603,6 +603,12 @@
   <url>
     <loc>https://wasatchfai.com/post/guided-how-to-for-following-up-after-visiting-a-foot-and-ankle-specialist</loc>
     <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wasatchfai.com/post/hallux-rigidus-vs-bunion-telling-big-toe-problems-apart</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
