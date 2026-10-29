@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://wasatchfai.com/blog</loc>
-    <lastmod>2026-10-22</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -537,6 +537,12 @@
   <url>
     <loc>https://wasatchfai.com/post/diabetic-foot-care-prevention-tips-and-strategies</loc>
     <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wasatchfai.com/post/diabetic-foot-ulcers-stages-and-treatment</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
