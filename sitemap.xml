@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://wasatchfai.com/blog</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -1191,6 +1191,12 @@
   <url>
     <loc>https://wasatchfai.com/post/why-your-local-podiatrist-is-your-go-to-foot-doctor-for-comprehensive-care</loc>
     <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wasatchfai.com/post/winter-boots-and-foot-pain-in-utah</loc>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
